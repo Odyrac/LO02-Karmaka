@@ -4,6 +4,12 @@ public class Plateau {
 
     private Joueur[] joueurs;
 
+    public Plateau() {
+        joueurs = new Joueur[2];
+        laSource = new Pile();
+        laFosse = new Pile();
+    }
+
     public void setJoueurs(Joueur[] joueurs) {
         this.joueurs = joueurs;
     }
