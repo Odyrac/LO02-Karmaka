@@ -1,6 +1,8 @@
 public class Transmigration extends Carte {
+
+    public static final int NB_CARTES = 3;
+    
     public Transmigration() {
-        //disponible dans le jeu en quantité de 3
         this.couleur = EnumCouleur.bleu;
         this.points = 1;
         this.nom = "Transmigration";

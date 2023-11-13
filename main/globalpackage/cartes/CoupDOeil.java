@@ -1,6 +1,8 @@
 public class CoupDOeil extends Carte {
+
+    public static final int NB_CARTES = 3;
+    
     public CoupDOeil() {
-        //disponible dans le jeu en quantité de 3
         this.couleur = EnumCouleur.bleu;
         this.points = 1;
         this.nom = "Coup d'Oeil";

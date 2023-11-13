@@ -31,6 +31,7 @@ public class Partie {
             //création de LaSource
             Pile source = new Pile();
             //les cartes sont ajoutées manuellement
+            //***A FAIRE*** LE PASSER EN AUTO AVEC LA VARIABLE NBCARTES
             source.ajouterCarte(new Transmigration());
             source.ajouterCarte(new Transmigration());
             source.ajouterCarte(new Transmigration());
@@ -43,6 +44,8 @@ public class Partie {
             source.ajouterCarte(new CoupDOeil());
             source.ajouterCarte(new CoupDOeil());
             source.ajouterCarte(new CoupDOeil());
+
+    
 
 
             source.melangerCartes();

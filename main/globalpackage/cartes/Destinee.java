@@ -1,6 +1,8 @@
 public class Destinee extends Carte {
+
+    public static final int NB_CARTES = 3;
+    
     public Destinee() {
-        // Disponible dans le jeu en quantité de 3
         this.couleur = EnumCouleur.bleu;
         this.points = 2;
         this.nom = "Destinée";
