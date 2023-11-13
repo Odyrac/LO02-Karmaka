@@ -17,17 +17,19 @@ public class Pile {
         cartes = newCartes;
     }
 
-    public Carte piocherCarte(Carte carte) {
+
+    public Carte piocherCarte() {
+        //on pioche la dernière carte du paquet
+        Carte cartePiochee = cartes[cartes.length - 1];
+        //on crée un nouveau paquet de cartes avec une carte en moins
         Carte[] newCartes = new Carte[cartes.length - 1];
-        Carte cartePiochee = null;
-        for (int i = 0; i < cartes.length; i++) {
-            if (cartes[i].equals(carte)) {
-                cartePiochee = cartes[i];
-            } else {
-                newCartes[i] = cartes[i];
-            }
+        //on copie toutes les cartes sauf la dernière dans le nouveau paquet
+        for (int i = 0; i < cartes.length - 1; i++) {
+            newCartes[i] = cartes[i];
         }
+        //on remplace le paquet de cartes par le nouveau
         cartes = newCartes;
+        //on retourne la carte piochée
         return cartePiochee;
     }
 
