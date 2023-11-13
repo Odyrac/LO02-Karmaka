@@ -13,8 +13,8 @@ public class Partie {
 
 
             //***A FAIRE*** ajouter une condition pour savoir si on joue contre un robot avec le menu
-            Joueur joueur1 = new JoueurReel();
-            Joueur joueur2 = new JoueurReel();
+            Joueur joueur1 = new JoueurReel("pseudo");
+            Joueur joueur2 = new JoueurReel("pseudo");
             
 
             Joueur[] joueurs = new Joueur[2];
@@ -30,20 +30,27 @@ public class Partie {
            
             //création de LaSource
             Pile source = new Pile();
-            //les cartes sont ajoutées manuellement
-            //***A FAIRE*** LE PASSER EN AUTO AVEC LA VARIABLE NBCARTES
-            source.ajouterCarte(new Transmigration());
-            source.ajouterCarte(new Transmigration());
-            source.ajouterCarte(new Transmigration());
-            source.ajouterCarte(new Destinee());
-            source.ajouterCarte(new Destinee());
-            source.ajouterCarte(new Destinee());
-            source.ajouterCarte(new RevesBrises());
-            source.ajouterCarte(new RevesBrises());
-            source.ajouterCarte(new RevesBrises());
-            source.ajouterCarte(new CoupDOeil());
-            source.ajouterCarte(new CoupDOeil());
-            source.ajouterCarte(new CoupDOeil());
+
+
+            for (int i = 0; i < Transmigration.NB_CARTES; i++) {
+                source.ajouterCarte(new Transmigration());
+            }
+
+            for (int i = 0; i < Destinee.NB_CARTES; i++) {
+                source.ajouterCarte(new Destinee());
+            }
+
+            for (int i = 0; i < RevesBrises.NB_CARTES; i++) {
+                source.ajouterCarte(new RevesBrises());
+            }
+
+            for (int i = 0; i < CoupDOeil.NB_CARTES; i++) {
+                source.ajouterCarte(new CoupDOeil());
+            }
+            
+
+
+            
 
     
 

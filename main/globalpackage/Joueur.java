@@ -8,7 +8,6 @@ public class Joueur {
 
 
     public void initialiserJoueur() {
-
         anneauxKarmiques = 0;
         positionEchelleKarmique = EnumEchelleKarmique.bousier;
     }
