@@ -192,6 +192,8 @@ public class Partie {
                 }
             }
 
+
+
             partie.getJoueurActuel().debutTour(partie);
 
         }

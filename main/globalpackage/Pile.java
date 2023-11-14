@@ -1,7 +1,5 @@
 public class Pile {
 
-   
-
     protected Carte[] cartes;
 
     public Pile() {
@@ -17,20 +15,30 @@ public class Pile {
         cartes = newCartes;
     }
 
-
     public Carte piocherCarte() {
-        //on pioche la dernière carte du paquet
+        // on pioche la dernière carte du paquet
         Carte cartePiochee = cartes[cartes.length - 1];
-        //on crée un nouveau paquet de cartes avec une carte en moins
+        // on crée un nouveau paquet de cartes avec une carte en moins
         Carte[] newCartes = new Carte[cartes.length - 1];
-        //on copie toutes les cartes sauf la dernière dans le nouveau paquet
+        // on copie toutes les cartes sauf la dernière dans le nouveau paquet
         for (int i = 0; i < cartes.length - 1; i++) {
             newCartes[i] = cartes[i];
         }
-        //on remplace le paquet de cartes par le nouveau
+        // on remplace le paquet de cartes par le nouveau
         cartes = newCartes;
-        //on retourne la carte piochée
+        // on retourne la carte piochée
         return cartePiochee;
+    }
+
+    public void supprimerCarte(int index) {
+        Carte[] newCartes = new Carte[cartes.length - 1];
+        for (int i = 0; i < index; i++) {
+            newCartes[i] = cartes[i];
+        }
+        for (int i = index; i < cartes.length - 1; i++) {
+            newCartes[i] = cartes[i + 1];
+        }
+        cartes = newCartes;
     }
 
     public void melangerCartes() {
@@ -41,7 +49,6 @@ public class Pile {
             cartes[random] = temp;
         }
     }
-
 
     public Carte getDerniereCarte() {
         if (cartes.length > 0) {
@@ -55,16 +62,21 @@ public class Pile {
         return cartes[index];
     }
 
-    
-    public static void cartesToString(Pile p) {
+    public static void cartesToString(Pile p, boolean avecDescription, boolean avecIndice) {
         for (int i = 0; i < p.getNbCartes(); i++) {
-            Utils.println(p.getCarte(i).getNom(), p.getCarte(i).getCouleur().toString());
-            Utils.println(p.getCarte(i).getDescription(), "gris");
+            if (avecIndice) {
+                Utils.println(i + 1 + ") " + p.getCarte(i).getNom() + " (" + p.getCarte(i).getPoints() + "p)",
+                        p.getCarte(i).getCouleur().toString());
+            } else {
+                Utils.println(p.getCarte(i).getNom() + " (" + p.getCarte(i).getPoints() + "p)",
+                        p.getCarte(i).getCouleur().toString());
+            }
+
+            if (avecDescription) {
+                Utils.println(p.getCarte(i).getDescription(), "gris");
+            }
         }
     }
-
-
-
 
     public int getNbCartes() {
         return cartes.length;
@@ -110,8 +122,4 @@ public class Pile {
         return nbCartesMosaiques;
     }
 
-
-
-
-    
 }

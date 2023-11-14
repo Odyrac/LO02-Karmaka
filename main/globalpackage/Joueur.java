@@ -2,7 +2,7 @@ public class Joueur {
     protected Pile main;
     protected Pile pile;
     protected Pile vieFuture;
-    protected Pile oeuvres;
+    protected OeuvresJoueur oeuvres;
     protected int anneauxKarmiques;
     protected EnumEchelleKarmique positionEchelleKarmique;
 
@@ -14,7 +14,7 @@ public class Joueur {
         main = new Pile();
         pile = new Pile();
         vieFuture = new Pile();
-        oeuvres = new Pile();
+        oeuvres = new OeuvresJoueur();
         if (pseudo == null) {
             this.pseudo = "BOT";
         } else {
@@ -35,9 +35,16 @@ public class Joueur {
         Utils.println("Vous :", "orange");
         Utils.infosJoueur(this);
         Utils.println("Votre main :", "orange");
-        Pile.cartesToString(this.getMain());
+        Pile.cartesToString(this.getMain(), true, false);
 
         System.out.print("\n");
+
+        if (this.getMain().getNbCartes() == 0 && this.getPile().getNbCartes() == 0) {
+            Utils.println("Vous entrez en Réincarnation", "rouge");
+            Utils.waitEnter();
+            reincarnation(partie);
+            return;
+        }
 
         if (this.getPile().getNbCartes() == 0) {
             Utils.println("1. Piocher une carte de votre pile [VIDE]", "gris");
@@ -58,29 +65,71 @@ public class Joueur {
                 Utils.waitEnter();
                 this.debutTour(partie);
             } else {
-                //this.piocherCarte(partie);
+                this.getMain().ajouterCarte(this.getPile().piocherCarte());
+                Utils.println("Vous piochez une carte de votre pile", "gris");
+                Utils.waitEnter();
+                partie.setJoueurActuel(joueurAdverse);
+                joueurAdverse.debutTour(partie);
             }
         } else if (choix == 2) {
-            //this.jouerCarteMainPoints(partie);
+            Utils.clearConsole();
+            Utils.println("Quelle carte souhaitez-vous jouer pour ses points :", "orange");
+            Pile.cartesToString(this.getMain(), true, true);
+            System.out.print("\n");
+            int choixCarte = Utils.inputInt("Choix : ", "jaune");
+            if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
+                Utils.println("Erreur : choix invalide", "rouge");
+                Utils.waitEnter();
+                this.debutTour(partie);
+            } else {
+                Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
+                this.getOeuvres().ajouterCarte(carteChoisie);
+                this.getMain().supprimerCarte(choixCarte - 1);
+                Utils.println("Vous jouez " + carteChoisie.getNom() + " pour ses points", "gris");
+                Utils.waitEnter();
+                partie.setJoueurActuel(joueurAdverse);
+                joueurAdverse.debutTour(partie);
+            }
         } else if (choix == 3) {
-            //this.jouerCarteMainPouvoir(partie);
+            // PARTIE SUR LES POUVOIRS A DEV
         } else if (choix == 4) {
-            //this.jouerCarteMainFutur(partie);
+            Utils.clearConsole();
+            Utils.println("Quelle carte souhaitez-vous jouer pour votre futur :", "orange");
+            Pile.cartesToString(this.getMain(), true, true);
+            System.out.print("\n");
+            int choixCarte = Utils.inputInt("Choix : ", "jaune");
+            if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
+                Utils.println("Erreur : choix invalide", "rouge");
+                Utils.waitEnter();
+                this.debutTour(partie);
+            } else {
+                Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
+                this.getVieFuture().ajouterCarte(carteChoisie);
+                this.getMain().supprimerCarte(choixCarte - 1);
+                Utils.println("Vous jouez " + carteChoisie.getNom() + " pour votre futur", "gris");
+                Utils.waitEnter();
+                partie.setJoueurActuel(joueurAdverse);
+                joueurAdverse.debutTour(partie);
+            }
         } else if (choix == 5) {
             Utils.println("Vous passez votre tour", "gris");
             Utils.waitEnter();
             partie.setJoueurActuel(joueurAdverse);
             joueurAdverse.debutTour(partie);
-            
+
         } else {
             Utils.println("Erreur : choix invalide", "rouge");
             Utils.waitEnter();
             this.debutTour(partie);
         }
 
-
     }
 
+    public void reincarnation(Partie partie) {
+        //EN COURS DE DEV
+        int points = this.getOeuvres().compterPoints();
+
+    }
 
 
 
@@ -96,6 +145,16 @@ public class Joueur {
         return vieFuture;
     }
 
+    public OeuvresJoueur getOeuvres() {
+        return oeuvres;
+    }
 
+    public int getAnneauxKarmiques() {
+        return anneauxKarmiques;
+    }
+
+    public EnumEchelleKarmique getPositionEchelleKarmique() {
+        return positionEchelleKarmique;
+    }
 
 }
