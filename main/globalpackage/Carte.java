@@ -24,6 +24,10 @@ public class Carte {
     public String getDescription() {
         return description;
     }
+
+    public int getPoints() {
+        return points;
+    }
 }
 
 

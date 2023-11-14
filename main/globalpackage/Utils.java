@@ -173,7 +173,17 @@ public class Utils {
         int nombreDeCartesPile = joueur.getPile().getNbCartes();
 
        
-        System.out.println(Utils.concatenerPaquets(Utils.construirePaquet("Vie Future", nombreDeCartesVieFuture, "gris", ""), Utils.construirePaquet("Pile", nombreDeCartesPile, "gris", "")));
+
+        Utils.println("Oeuvres :", "gris");
+        Pile.cartesToString(joueur.getOeuvres(), false, false);
+
+        Utils.println("Anneaux Karmiques : " + joueur.getAnneauxKarmiques(), "gris");
+
+        Utils.println("Position Echelle Karmique : " + joueur.getPositionEchelleKarmique(), "gris");
+
+         System.out.println(Utils.concatenerPaquets(Utils.construirePaquet("Vie Future", nombreDeCartesVieFuture, "gris", ""), Utils.construirePaquet("Pile", nombreDeCartesPile, "gris", "")));
+
+        
 
 
     }
