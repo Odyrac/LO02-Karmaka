@@ -43,6 +43,74 @@ public class Pile {
     }
 
 
+    public Carte getDerniereCarte() {
+        if (cartes.length > 0) {
+            return cartes[cartes.length - 1];
+        } else {
+            return null;
+        }
+    }
+
+    public Carte getCarte(int index) {
+        return cartes[index];
+    }
+
+    
+    public static void cartesToString(Pile p) {
+        for (int i = 0; i < p.getNbCartes(); i++) {
+            Utils.println(p.getCarte(i).getNom(), p.getCarte(i).getCouleur().toString());
+            Utils.println(p.getCarte(i).getDescription(), "gris");
+        }
+    }
+
+
+
+
+    public int getNbCartes() {
+        return cartes.length;
+    }
+
+    public int getNbCartesBleues() {
+        int nbCartesBleues = 0;
+        for (Carte carte : cartes) {
+            if (carte.getCouleur() == EnumCouleur.bleu) {
+                nbCartesBleues++;
+            }
+        }
+        return nbCartesBleues;
+    }
+
+    public int getNbCartesRouges() {
+        int nbCartesRouges = 0;
+        for (Carte carte : cartes) {
+            if (carte.getCouleur() == EnumCouleur.rouge) {
+                nbCartesRouges++;
+            }
+        }
+        return nbCartesRouges;
+    }
+
+    public int getNbCartesVertes() {
+        int nbCartesVertes = 0;
+        for (Carte carte : cartes) {
+            if (carte.getCouleur() == EnumCouleur.vert) {
+                nbCartesVertes++;
+            }
+        }
+        return nbCartesVertes;
+    }
+
+    public int getNbCartesMosaiques() {
+        int nbCartesMosaiques = 0;
+        for (Carte carte : cartes) {
+            if (carte.getCouleur() == EnumCouleur.mosaique) {
+                nbCartesMosaiques++;
+            }
+        }
+        return nbCartesMosaiques;
+    }
+
+
 
 
     

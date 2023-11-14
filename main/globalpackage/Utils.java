@@ -5,18 +5,17 @@ public class Utils {
     // y en ait partout et que pour le rendre plus beau dans la console on ait juste
     // à modifier ici
 
-    // system.out.println, mais qui accepte une couleur en paramètre
-    public static void println(String text, String color) {
-
+    public static String appliquerCouleur(String text, String color) {
         if (color == null) {
             color = "";
         }
-        ;
 
         if (color.equals("gris")) {
             color = "\u001B[90m";
         } else if (color.equals("rouge")) {
             color = "\u001B[31m";
+        } else if (color.equals("orange")) {
+            color = "\u001B[38;5;208m";
         } else if (color.equals("bleu")) {
             color = "\u001B[34m";
         } else if (color.equals("vert")) {
@@ -30,24 +29,28 @@ public class Utils {
         } else if (color.equals("mosaique")) {
             // on modife le text pour que chaque lettre soit d'une couleur différente entre
             // rouge, bleu et vert
-            String textMosaique = "";
+            StringBuilder textMosaique = new StringBuilder();
             for (int i = 0; i < text.length(); i++) {
                 if (i % 3 == 0) {
-                    textMosaique += "\u001B[31m" + text.charAt(i);
+                    textMosaique.append("\u001B[31m").append(text.charAt(i));
                 } else if (i % 3 == 1) {
-                    textMosaique += "\u001B[34m" + text.charAt(i);
+                    textMosaique.append("\u001B[34m").append(text.charAt(i));
                 } else {
-                    textMosaique += "\u001B[32m" + text.charAt(i);
+                    textMosaique.append("\u001B[32m").append(text.charAt(i));
                 }
             }
-            text = textMosaique;
-            color = "";
+            return textMosaique.toString();
         } else {
-            color = "\u001B[37m"; // blanc par défaut
+            color = "\u001B[37m"; // Blanc par défaut
         }
-        ;
 
-        System.out.println(color + text + "\u001B[0m");
+        return color + text;
+    }
+
+    // system.out.println, mais qui accepte une couleur en paramètre
+    public static void println(String text, String color) {
+        String coloredText = appliquerCouleur(text, color);
+        System.out.println(coloredText + "\u001B[0m");
     }
 
     public static int inputInt(String text, String color) {
@@ -83,5 +86,99 @@ public class Utils {
         String input = sc.nextLine();
         return input;
     }
+
+    public static String center(String text, int length) {
+        if (text.length() >= length) {
+            return text.substring(0, length);
+        }
+
+        int padding = (length - text.length()) / 2;
+        StringBuilder centeredText = new StringBuilder();
+
+        for (int i = 0; i < padding; i++) {
+            centeredText.append(" ");
+        }
+
+        centeredText.append(text);
+
+        while (centeredText.length() < length) {
+            centeredText.append(" ");
+        }
+
+        return centeredText.toString();
+    }
+
+    public static String construirePaquet(String titre, int nombreCartes, String couleur, String dernierElement) {
+        String couleurTexte = appliquerCouleur("", couleur);
+
+        String bordureHautBas = couleurTexte + "+-------------+" + "\u001B[0m";
+        String bordureCote = couleurTexte + "|             |" + "\u001B[0m";
+        String contenu = couleurTexte + "|" + Utils.center(titre, 13) + "|" + "\u001B[0m";
+        String nombreCartesTexte = couleurTexte + "|" + Utils.center(String.valueOf(nombreCartes) + " cartes", 13) + "|"
+                + "\u001B[0m";
+        String contenuDernierElement = (dernierElement != "")
+                ? couleurTexte + "|" + Utils.center("Dernière : " + dernierElement, 13) + "|" + "\u001B[0m"
+                : bordureCote;
+
+        StringBuilder paquet = new StringBuilder();
+        paquet.append(bordureHautBas).append("\n");
+        paquet.append(bordureCote).append("\n");
+        paquet.append(contenu).append("\n");
+        paquet.append(bordureCote).append("\n");
+        paquet.append(bordureCote).append("\n");
+        paquet.append(nombreCartesTexte).append("\n");
+        paquet.append(contenuDernierElement).append("\n");
+
+        paquet.append(bordureCote).append("\n");
+        paquet.append(bordureHautBas).append("\n");
+
+        return paquet.toString();
+    }
+
+    public static String concatenerPaquets(String paquet1, String paquet2) {
+        String[] lignesPaquet1 = paquet1.split("\n");
+        String[] lignesPaquet2 = paquet2.split("\n");
+
+        StringBuilder resultat = new StringBuilder();
+        int maxLignes = Math.max(lignesPaquet1.length, lignesPaquet2.length);
+
+        for (int i = 0; i < maxLignes; i++) {
+            String lignePaquet1 = (i < lignesPaquet1.length) ? lignesPaquet1[i] : "";
+            String lignePaquet2 = (i < lignesPaquet2.length) ? lignesPaquet2[i] : "";
+
+            resultat.append(lignePaquet1).append("    ").append(lignePaquet2).append("\n");
+        }
+
+        return resultat.toString();
+    }
+
+    public static void infosPlateau(Partie partie, String pseudo) {
+        int nombreDeCartesSource = partie.getPlateau().getLaSource().getNbCartes();
+        int nombreDeCartesFosse = partie.getPlateau().getLaFosse().getNbCartes();
+        String dernierElement;
+        if (partie.getPlateau().getLaFosse().getDerniereCarte() == null) {
+            dernierElement = "/";
+        } else {
+            dernierElement = partie.getPlateau().getLaFosse().getDerniereCarte().getNom();
+        }
+
+
+        Utils.println("Plateau (actuellement le tour de " + pseudo + ") :", "orange");
+
+        System.out.println(Utils.concatenerPaquets(Utils.construirePaquet("LaSource", nombreDeCartesSource, "cyan", ""), Utils.construirePaquet("LaFosse", nombreDeCartesFosse, "rose", dernierElement)));
+    }
+
+    public static void infosJoueur(Joueur joueur) {
+        int nombreDeCartesVieFuture = joueur.getVieFuture().getNbCartes();
+        int nombreDeCartesPile = joueur.getPile().getNbCartes();
+
+       
+        System.out.println(Utils.concatenerPaquets(Utils.construirePaquet("Vie Future", nombreDeCartesVieFuture, "gris", ""), Utils.construirePaquet("Pile", nombreDeCartesPile, "gris", "")));
+
+
+    }
+
+
+
 
 }

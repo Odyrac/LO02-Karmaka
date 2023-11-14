@@ -14,12 +14,24 @@ public class Plateau {
         this.joueurs = joueurs;
     }
 
+    public Joueur[] getJoueurs() {
+        return joueurs;
+    }
+
     public void setLaSource(Pile laSource) {
         this.laSource = laSource;
     }
 
     public void setLaFosse(Pile laFosse) {
         this.laFosse = laFosse;
+    }
+
+    public Pile getLaSource() {
+        return laSource;
+    }
+
+    public Pile getLaFosse() {
+        return laFosse;
     }
 
     

@@ -1,6 +1,6 @@
 public class Destinee extends Carte {
 
-    public static final int NB_CARTES = 3;
+    public static final int NB_CARTES = 2;
 
     public Destinee() {
         this.couleur = EnumCouleur.bleu;
