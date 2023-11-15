@@ -3,10 +3,23 @@ public class Partie {
     private Joueur joueurActuel;
     private Plateau plateau;
 
+    private static Partie instance;
+
+    public static Partie getInstance() {
+        if (instance == null) {
+            instance = new Partie();
+        }
+        return instance;
+    }
+
+    private Partie() {
+        //
+    }
+
     public void debutPartie(Partie partie) {
 
         if (partie == null) {
-            partie = new Partie();
+            partie = Partie.getInstance();
 
             Plateau plateau = new Plateau();
 
@@ -16,7 +29,7 @@ public class Partie {
             Utils.println("2. 1 joueur réel et 1 virtuel", "vert");
             Utils.println("3. 2 joueurs virtuels", "vert");
             System.out.print("\n");
-            int choix = Utils.inputInt("Choix : ", "jaune");
+            int choix = Utils.inputInt("Choix : ", "jaune", false, 3);
 
             Joueur joueur1 = null;
             Joueur joueur2 = null;
@@ -198,6 +211,17 @@ public class Partie {
 
         }
 
+    }
+
+
+
+    public void finPartie() {
+        Utils.clearConsole();
+        Utils.println("Vous avez atteint la transcendance !", "orange");
+        Utils.printlnImportant("Fin de la partie", "orange");
+        Utils.println("Le gagnant est " + this.getJoueurActuel().getPseudo(), "orange");
+        Utils.waitEnter();
+        Main.main(null);
     }
 
     public void setPlateau(Plateau plateau) {

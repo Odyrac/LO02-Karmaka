@@ -1,3 +1,4 @@
 public enum EnumEchelleKarmique {
-    bousier, serpent, loup, singe
+    bousier, serpent, loup, singe, transcendance
 }
+
