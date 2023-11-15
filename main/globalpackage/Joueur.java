@@ -27,6 +27,7 @@ public class Joueur {
         Utils.clearConsole();
 
         Joueur joueurAdverse = partie.getJoueurAdverse(this);
+        Utils.printLigne();
         Utils.println("Aversaire :", "orange");
         Utils.infosJoueur(joueurAdverse);
 
