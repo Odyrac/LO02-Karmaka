@@ -59,6 +59,10 @@ public class Utils {
         Utils.println("--------------------------------------------------", "gris");
     }
 
+    public static void printLigne() {
+        Utils.println("--------------------------------------------------", "gris");
+    }
+
     public static int inputInt(String text, String color, boolean enJeu, int nombreChoix) {
         Scanner sc = new Scanner(System.in);
         Utils.println(text, color);
@@ -167,6 +171,7 @@ public class Utils {
     }
 
     public static void infosPlateau(Partie partie, String pseudo) {
+        Utils.printLigne();
         int nombreDeCartesSource = partie.getPlateau().getLaSource().getNbCartes();
         int nombreDeCartesFosse = partie.getPlateau().getLaFosse().getNbCartes();
         String dernierElement;
@@ -180,6 +185,8 @@ public class Utils {
         Utils.println("Plateau (actuellement le tour de " + pseudo + ") :", "orange");
 
         System.out.println(Utils.concatenerPaquets(Utils.construirePaquet("LaSource", nombreDeCartesSource, "cyan", ""), Utils.construirePaquet("LaFosse", nombreDeCartesFosse, "rose", dernierElement)));
+
+        Utils.printLigne();
     }
 
     public static void infosJoueur(Joueur joueur) {
