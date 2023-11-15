@@ -39,10 +39,11 @@ public class Joueur {
 
         System.out.print("\n");
 
+        // on vérifie si les conditions pour la réincarnation sont réunies
         if (this.getMain().getNbCartes() == 0 && this.getPile().getNbCartes() == 0) {
-            Utils.println("Vous entrez en Réincarnation", "rouge");
+            Utils.printlnImportant("Vous entrez en Réincarnation", "orange");
             Utils.waitEnter();
-            reincarnation(partie);
+            this.reincarnation(partie);
             return;
         }
 
@@ -52,12 +53,19 @@ public class Joueur {
             Utils.println("1. Piocher une carte de votre pile", "vert");
         }
 
-        Utils.println("2. Jouer une carte de ma main | points", "vert");
-        Utils.println("3. Jouer une carte de ma main | pouvoir", "vert");
-        Utils.println("4. Jouer une carte de ma main | futur", "vert");
+        if (this.getMain().getNbCartes() == 0) {
+            Utils.println("2. Jouer une carte de ma main | points [VIDE]", "gris");
+            Utils.println("3. Jouer une carte de ma main | pouvoir [VIDE]", "gris");
+            Utils.println("4. Jouer une carte de ma main | futur [VIDE]", "gris");
+        } else {
+            Utils.println("2. Jouer une carte de ma main | points", "vert");
+            Utils.println("3. Jouer une carte de ma main | pouvoir", "vert");
+            Utils.println("4. Jouer une carte de ma main | futur", "vert");
+        }
+
         Utils.println("5. Passer", "vert");
         System.out.print("\n");
-        int choix = Utils.inputInt("Choix : ", "jaune");
+        int choix = Utils.inputInt("Choix : ", "jaune", true, 5);
 
         if (choix == 1) {
             if (this.getPile().getNbCartes() == 0) {
@@ -76,7 +84,7 @@ public class Joueur {
             Utils.println("Quelle carte souhaitez-vous jouer pour ses points :", "orange");
             Pile.cartesToString(this.getMain(), true, true);
             System.out.print("\n");
-            int choixCarte = Utils.inputInt("Choix : ", "jaune");
+            int choixCarte = Utils.inputInt("Choix : ", "jaune", true, this.getMain().getNbCartes());
             if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
                 Utils.println("Erreur : choix invalide", "rouge");
                 Utils.waitEnter();
@@ -91,13 +99,17 @@ public class Joueur {
                 joueurAdverse.debutTour(partie);
             }
         } else if (choix == 3) {
-            // PARTIE SUR LES POUVOIRS A DEV
+            // PARTIE SUR LES POUVOIRS A DEV pour l'instant ça passe juste le tour
+            Utils.println("Vous passez votre tour A CHANGER POUR LES POUVOIRS", "gris");
+            Utils.waitEnter();
+            partie.setJoueurActuel(joueurAdverse);
+            joueurAdverse.debutTour(partie);
         } else if (choix == 4) {
             Utils.clearConsole();
             Utils.println("Quelle carte souhaitez-vous jouer pour votre futur :", "orange");
             Pile.cartesToString(this.getMain(), true, true);
             System.out.print("\n");
-            int choixCarte = Utils.inputInt("Choix : ", "jaune");
+            int choixCarte = Utils.inputInt("Choix : ", "jaune", true, this.getMain().getNbCartes());
             if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
                 Utils.println("Erreur : choix invalide", "rouge");
                 Utils.waitEnter();
@@ -126,12 +138,112 @@ public class Joueur {
     }
 
     public void reincarnation(Partie partie) {
-        //EN COURS DE DEV
+
+        Utils.clearConsole();
         int points = this.getOeuvres().compterPoints();
+        Utils.println(
+                "Vous avez actuellement " + points + " points et " + this.getAnneauxKarmiques() + " Anneaux Karmiques",
+                "orange");
+
+        // prochaine position echelle karmique, l'élement suivant de l'enum
+        EnumEchelleKarmique prochainePosition = EnumEchelleKarmique.values()[this.getPositionEchelleKarmique().ordinal()
+                + 1];
+        Utils.println(" _ " + prochainePosition.toString() + " (" + enumKarmiquetoPoints(prochainePosition)
+                + " points nécessaires)", "vert");
+        Utils.println("/ \\", "vert");
+        Utils.println("| |", "vert");
+        Utils.println(this.getPositionEchelleKarmique().toString(), "vert");
+
+        // ceci représente le cas où le joueur avance d'une Echelle Karmique sans avoir
+        // besoin d'utiliser ses Anneaux
+        if (points >= enumKarmiquetoPoints(prochainePosition)) {
+            Utils.printlnImportant("Vous progressez sur l'Echelle Karmique !", "orange");
+            Utils.waitEnter();
+            if (prochainePosition == EnumEchelleKarmique.transcendance) {
+                partie.finPartie();
+                return;
+            } else {
+                reincarnationActions(prochainePosition, partie);
+            }
+
+        } else if (points + this.getAnneauxKarmiques() < enumKarmiquetoPoints(prochainePosition)) { // cas où le joueur
+                                                                                                    // ne peut pas
+                                                                                                    // avancer sur
+                                                                                                    // l'Echelle
+                                                                                                    // Karmique (pas
+                                                                                                    // assez de points +
+                                                                                                    // pas assez
+                                                                                                    // d'Anneaux)
+            Utils.printlnImportant("Vous ne progressez pas sur l'Echelle Karmique (pas assez de points et d'Anneaux)",
+                    "orange");
+            Utils.println("Vous recevez un Anneau en compensation", "vert");
+            Utils.waitEnter();
+            this.anneauxKarmiques++;
+            reincarnationActions(this.getPositionEchelleKarmique(), partie);
+
+        } else if (points + this.getAnneauxKarmiques() >= enumKarmiquetoPoints(prochainePosition)) { // le joueur a la
+                                                                                                     // possibilité
+                                                                                                     // d'utiliser ses
+                                                                                                     // Anneaux
+            int pointsManquants = enumKarmiquetoPoints(prochainePosition) - points;
+            Utils.printlnImportant("Vous pouvez progresser sur l'Echelle Karmique", "orange");
+            Utils.println("Vous utilisez " + pointsManquants + " Anneaux Karmiques", "vert");
+            Utils.waitEnter();
+            this.anneauxKarmiques -= pointsManquants;
+            if (prochainePosition == EnumEchelleKarmique.transcendance) {
+                partie.finPartie();
+                return;
+            } else {
+                reincarnationActions(prochainePosition, partie);
+            }
+        }
 
     }
 
+    public void reincarnationActions(EnumEchelleKarmique prochainePosition, Partie partie) {
+        this.setPositionEchelleKarmique(prochainePosition);
+        // on défausse les oeuvres dans la fosses
+        for (int i = 0; i < this.getOeuvres().getNbCartes(); i++) {
+            partie.getPlateau().getLaFosse().ajouterCarte(this.getOeuvres().piocherCarte());
+        }
 
+        // on prend toutes les cartes de notre vie future comme nouvelle main
+        for (int i = 0; i < this.getVieFuture().getNbCartes(); i++) {
+            this.getMain().ajouterCarte(this.getVieFuture().piocherCarte());
+        }
+
+        // on constitue la nouvelle pile
+        if (this.getMain().getNbCartes() < 6) {
+            while (this.getMain().getNbCartes() + this.getPile().getNbCartes() <= 6) {
+                this.getPile().ajouterCarte(partie.getPlateau().getLaSource().piocherCarte());
+            }
+        }
+
+        partie.setJoueurActuel(partie.getJoueurAdverse(this));
+        partie.getJoueurActuel().debutTour(partie);
+        return;
+    };
+
+    public int enumKarmiquetoPoints(EnumEchelleKarmique echelle) {
+        switch (echelle) {
+            case bousier:
+                return 0;
+            case serpent:
+                return 4;
+            case loup:
+                return 5;
+            case singe:
+                return 6;
+            case transcendance:
+                return 7;
+            default:
+                return 0;
+        }
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
 
     public Pile getMain() {
         return main;
@@ -155,6 +267,10 @@ public class Joueur {
 
     public EnumEchelleKarmique getPositionEchelleKarmique() {
         return positionEchelleKarmique;
+    }
+
+    public void setPositionEchelleKarmique(EnumEchelleKarmique positionEchelleKarmique) {
+        this.positionEchelleKarmique = positionEchelleKarmique;
     }
 
 }

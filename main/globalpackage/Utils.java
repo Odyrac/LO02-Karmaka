@@ -53,10 +53,24 @@ public class Utils {
         System.out.println(coloredText + "\u001B[0m");
     }
 
-    public static int inputInt(String text, String color) {
+    public static void printlnImportant(String text, String color) {
+        Utils.println("--------------------------------------------------", "gris");
+        Utils.println(text, color);
+        Utils.println("--------------------------------------------------", "gris");
+    }
+
+    public static int inputInt(String text, String color, boolean enJeu, int nombreChoix) {
         Scanner sc = new Scanner(System.in);
         Utils.println(text, color);
 
+       //si c'est un input de type enJeu et que joueur actuel est de type JoueurVirtuel alors on fait un choix aléatoire
+        if (enJeu && Partie.getInstance().getJoueurActuel() instanceof JoueurVirtuel) {
+            int choix = (int) (Math.random() * nombreChoix) + 1;
+            Utils.println("[BOT] Choix du JoueurVirtuel : " + choix, "rose");
+            return choix;
+        }
+
+        
         while (!sc.hasNextInt()) {
             Utils.println("Veuillez entrer un entier valide.", "rouge");
             sc.next(); // consommer l'entrée invalide

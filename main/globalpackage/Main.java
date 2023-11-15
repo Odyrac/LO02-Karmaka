@@ -21,13 +21,12 @@ public class Main {
         Utils.println("3. Crédits", "vert");
         Utils.println("4. Quitter", "vert");
         System.out.print("\n");
-        int choix = Utils.inputInt("Choix : ", "jaune");
+        int choix = Utils.inputInt("Choix : ", "jaune", false, 4);
 
         if (choix == 1) {
             // on lance une nouvelle partie
-
-            Partie partie = new Partie();
-            partie.debutPartie(null);
+            Partie.getInstance().debutPartie(null);
+  
 
         } else if (choix == 2) {
             // on charge une partie
