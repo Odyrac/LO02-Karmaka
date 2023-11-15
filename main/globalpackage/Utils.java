@@ -66,7 +66,7 @@ public class Utils {
        //si c'est un input de type enJeu et que joueur actuel est de type JoueurVirtuel alors on fait un choix aléatoire
         if (enJeu && Partie.getInstance().getJoueurActuel() instanceof JoueurVirtuel) {
             int choix = (int) (Math.random() * nombreChoix) + 1;
-            Utils.println("Choix du joueur virtuel : " + choix, "rose");
+            Utils.println("[BOT] Choix du JoueurVirtuel : " + choix, "rose");
             return choix;
         }
 
