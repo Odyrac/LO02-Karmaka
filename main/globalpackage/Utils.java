@@ -67,14 +67,14 @@ public class Utils {
         Scanner sc = new Scanner(System.in);
         Utils.println(text, color);
 
-       //si c'est un input de type enJeu et que joueur actuel est de type JoueurVirtuel alors on fait un choix aléatoire
+        // si c'est un input de type enJeu et que joueur actuel est de type
+        // JoueurVirtuel alors on fait un choix aléatoire
         if (enJeu && Partie.getInstance().getJoueurActuel() instanceof JoueurVirtuel) {
             int choix = (int) (Math.random() * nombreChoix) + 1;
             Utils.println("[BOT] Choix du JoueurVirtuel : " + choix, "rose");
             return choix;
         }
 
-        
         while (!sc.hasNextInt()) {
             Utils.println("Veuillez entrer un entier valide.", "rouge");
             sc.next(); // consommer l'entrée invalide
@@ -135,8 +135,10 @@ public class Utils {
         String nombreCartesTexte = couleurTexte + "|" + Utils.center(String.valueOf(nombreCartes) + " cartes", 13) + "|"
                 + "\u001B[0m";
         String contenuDernierElement = (dernierElement != "")
-                ? couleurTexte + "|" + Utils.center("Dernière : " + dernierElement, 13) + "|" + "\u001B[0m"
+                ? couleurTexte + "|" + Utils.center("Dernière : ", 13) + "|" + "\u001B[0m"
                 : bordureCote;
+
+        String contenuDernierElement2 = couleurTexte + "|" + Utils.center(dernierElement, 13) + "|" + "\u001B[0m";
 
         StringBuilder paquet = new StringBuilder();
         paquet.append(bordureHautBas).append("\n");
@@ -147,7 +149,12 @@ public class Utils {
         paquet.append(nombreCartesTexte).append("\n");
         paquet.append(contenuDernierElement).append("\n");
 
-        paquet.append(bordureCote).append("\n");
+        if (dernierElement != "") {
+            paquet.append(contenuDernierElement2).append("\n");
+        } else {
+            paquet.append(bordureCote).append("\n");
+        }
+
         paquet.append(bordureHautBas).append("\n");
 
         return paquet.toString();
@@ -181,10 +188,10 @@ public class Utils {
             dernierElement = partie.getPlateau().getLaFosse().getDerniereCarte().getNom();
         }
 
-
         Utils.println("Plateau (actuellement le tour de " + pseudo + ") :", "orange");
 
-        System.out.println(Utils.concatenerPaquets(Utils.construirePaquet("LaSource", nombreDeCartesSource, "cyan", ""), Utils.construirePaquet("LaFosse", nombreDeCartesFosse, "rose", dernierElement)));
+        System.out.println(Utils.concatenerPaquets(Utils.construirePaquet("LaSource", nombreDeCartesSource, "cyan", ""),
+                Utils.construirePaquet("LaFosse", nombreDeCartesFosse, "rose", dernierElement)));
 
         Utils.printLigne();
     }
@@ -193,8 +200,6 @@ public class Utils {
         int nombreDeCartesVieFuture = joueur.getVieFuture().getNbCartes();
         int nombreDeCartesPile = joueur.getPile().getNbCartes();
 
-       
-
         Utils.println("Oeuvres :", "gris");
         Pile.cartesToString(joueur.getOeuvres(), false, false);
 
@@ -202,14 +207,10 @@ public class Utils {
 
         Utils.println("Position Echelle Karmique : " + joueur.getPositionEchelleKarmique(), "gris");
 
-         System.out.println(Utils.concatenerPaquets(Utils.construirePaquet("Vie Future", nombreDeCartesVieFuture, "gris", ""), Utils.construirePaquet("Pile", nombreDeCartesPile, "gris", "")));
-
-        
-
+        System.out.println(
+                Utils.concatenerPaquets(Utils.construirePaquet("Vie Future", nombreDeCartesVieFuture, "gris", ""),
+                        Utils.construirePaquet("Pile", nombreDeCartesPile, "gris", "")));
 
     }
-
-
-
 
 }
