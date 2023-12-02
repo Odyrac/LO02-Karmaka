@@ -73,120 +73,126 @@ public class Partie {
             // création de LaSource
             Pile source = new Pile();
 
-            // Ajout des cartes pour Bassesse
-            for (int i = 0; i < Bassesse.NB_CARTES; i++) {
-                source.ajouterCarte(new Bassesse());
-            }
+//            // Ajout des cartes pour Bassesse
+//            for (int i = 0; i < Bassesse.NB_CARTES; i++) {
+//                source.ajouterCarte(new Bassesse());
+//            }
+//
+//            // Ajout des cartes pour CoupDOeil
+//            for (int i = 0; i < CoupDOeil.NB_CARTES; i++) {
+//                source.ajouterCarte(new CoupDOeil());
+//            }
+//
+//            // Ajout des cartes pour Crise
+//            for (int i = 0; i < Crise.NB_CARTES; i++) {
+//                source.ajouterCarte(new Crise());
+//            }
+//
+//            // Ajout des cartes pour Deni
+//            for (int i = 0; i < Deni.NB_CARTES; i++) {
+//                source.ajouterCarte(new Deni());
+//            }
+//
+//            // Ajout des cartes pour DernierSouffle
+//            for (int i = 0; i < DernierSouffle.NB_CARTES; i++) {
+//                source.ajouterCarte(new DernierSouffle());
+//            }
+//
+//            // Ajout des cartes pour Duperie
+//            for (int i = 0; i < Duperie.NB_CARTES; i++) {
+//                source.ajouterCarte(new Duperie());
+//            }
+//
+//            // Ajout des cartes pour Fournaise
+//            for (int i = 0; i < Fournaise.NB_CARTES; i++) {
+//                source.ajouterCarte(new Fournaise());
+//            }
+//
+//            // Ajout des cartes pour Incarnation
+//            for (int i = 0; i < Incarnation.NB_CARTES; i++) {
+//                source.ajouterCarte(new Incarnation());
+//            }
+//
+//            // Ajout des cartes pour Jubile
+//            for (int i = 0; i < Jubile.NB_CARTES; i++) {
+//                source.ajouterCarte(new Jubile());
+//            }
+//
+//            // Ajout des cartes pour Lendemain
+//            for (int i = 0; i < Lendemain.NB_CARTES; i++) {
+//                source.ajouterCarte(new Lendemain());
+//            }
+//
+//            // Ajout des cartes pour Longevite
+//            for (int i = 0; i < Longevite.NB_CARTES; i++) {
+//                source.ajouterCarte(new Longevite());
+//            }
+//
+//            // Ajout des cartes pour Mimetisme
+//            for (int i = 0; i < Mimetisme.NB_CARTES; i++) {
+//                source.ajouterCarte(new Mimetisme());
+//            }
+//
+//            // Ajout des cartes pour Panique
+//            for (int i = 0; i < Panique.NB_CARTES; i++) {
+//                source.ajouterCarte(new Panique());
+//            }
+//
+//            // Ajout des cartes pour Recyclage
+//            for (int i = 0; i < Recyclage.NB_CARTES; i++) {
+//                source.ajouterCarte(new Recyclage());
+//            }
+//
+//            // Ajout des cartes pour RevesBrises
+//            for (int i = 0; i < RevesBrises.NB_CARTES; i++) {
+//                source.ajouterCarte(new RevesBrises());
+//            }
+//
+//            // Ajout des cartes pour Roulette
+//            for (int i = 0; i < Roulette.NB_CARTES; i++) {
+//                source.ajouterCarte(new Roulette());
+//            }
+//
+//            // Ajout des cartes pour Sauvetage
+//            for (int i = 0; i < Sauvetage.NB_CARTES; i++) {
+//                source.ajouterCarte(new Sauvetage());
+//            }
+//
+//            // Ajout des cartes pour Semis
+//            for (int i = 0; i < Semis.NB_CARTES; i++) {
+//                source.ajouterCarte(new Semis());
+//            }
+//
+//            // Ajout des cartes pour Transmigration
+//            for (int i = 0; i < Transmigration.NB_CARTES; i++) {
+//                source.ajouterCarte(new Transmigration());
+//            }
+//
+//            // Ajout des cartes pour Vengeance
+//            for (int i = 0; i < Vengeance.NB_CARTES; i++) {
+//                source.ajouterCarte(new Vengeance());
+//            }
+//
+//            // Ajout des cartes pour Vol
+//            for (int i = 0; i < Vol.NB_CARTES; i++) {
+//                source.ajouterCarte(new Vol());
+//            }
+//
+//            // Ajout des cartes pour Voyage
+//            for (int i = 0; i < Voyage.NB_CARTES; i++) {
+//                source.ajouterCarte(new Voyage());
+//            }
+//
+//            // Ajout des cartes pour Destinee
+//            for (int i = 0; i < Destinee.NB_CARTES; i++) {
+//                source.ajouterCarte(new Destinee());
+//            }
 
-            // Ajout des cartes pour CoupDOeil
-            for (int i = 0; i < CoupDOeil.NB_CARTES; i++) {
+            // On rempli au max la source de cartes Coups d'Oeil
+            for (int i = 0; i < 54; i++) {
                 source.ajouterCarte(new CoupDOeil());
             }
 
-            // Ajout des cartes pour Crise
-            for (int i = 0; i < Crise.NB_CARTES; i++) {
-                source.ajouterCarte(new Crise());
-            }
-
-            // Ajout des cartes pour Deni
-            for (int i = 0; i < Deni.NB_CARTES; i++) {
-                source.ajouterCarte(new Deni());
-            }
-
-            // Ajout des cartes pour DernierSouffle
-            for (int i = 0; i < DernierSouffle.NB_CARTES; i++) {
-                source.ajouterCarte(new DernierSouffle());
-            }
-
-            // Ajout des cartes pour Duperie
-            for (int i = 0; i < Duperie.NB_CARTES; i++) {
-                source.ajouterCarte(new Duperie());
-            }
-
-            // Ajout des cartes pour Fournaise
-            for (int i = 0; i < Fournaise.NB_CARTES; i++) {
-                source.ajouterCarte(new Fournaise());
-            }
-
-            // Ajout des cartes pour Incarnation
-            for (int i = 0; i < Incarnation.NB_CARTES; i++) {
-                source.ajouterCarte(new Incarnation());
-            }
-
-            // Ajout des cartes pour Jubile
-            for (int i = 0; i < Jubile.NB_CARTES; i++) {
-                source.ajouterCarte(new Jubile());
-            }
-
-            // Ajout des cartes pour Lendemain
-            for (int i = 0; i < Lendemain.NB_CARTES; i++) {
-                source.ajouterCarte(new Lendemain());
-            }
-
-            // Ajout des cartes pour Longevite
-            for (int i = 0; i < Longevite.NB_CARTES; i++) {
-                source.ajouterCarte(new Longevite());
-            }
-
-            // Ajout des cartes pour Mimetisme
-            for (int i = 0; i < Mimetisme.NB_CARTES; i++) {
-                source.ajouterCarte(new Mimetisme());
-            }
-
-            // Ajout des cartes pour Panique
-            for (int i = 0; i < Panique.NB_CARTES; i++) {
-                source.ajouterCarte(new Panique());
-            }
-
-            // Ajout des cartes pour Recyclage
-            for (int i = 0; i < Recyclage.NB_CARTES; i++) {
-                source.ajouterCarte(new Recyclage());
-            }
-
-            // Ajout des cartes pour RevesBrises
-            for (int i = 0; i < RevesBrises.NB_CARTES; i++) {
-                source.ajouterCarte(new RevesBrises());
-            }
-
-            // Ajout des cartes pour Roulette
-            for (int i = 0; i < Roulette.NB_CARTES; i++) {
-                source.ajouterCarte(new Roulette());
-            }
-
-            // Ajout des cartes pour Sauvetage
-            for (int i = 0; i < Sauvetage.NB_CARTES; i++) {
-                source.ajouterCarte(new Sauvetage());
-            }
-
-            // Ajout des cartes pour Semis
-            for (int i = 0; i < Semis.NB_CARTES; i++) {
-                source.ajouterCarte(new Semis());
-            }
-
-            // Ajout des cartes pour Transmigration
-            for (int i = 0; i < Transmigration.NB_CARTES; i++) {
-                source.ajouterCarte(new Transmigration());
-            }
-
-            // Ajout des cartes pour Vengeance
-            for (int i = 0; i < Vengeance.NB_CARTES; i++) {
-                source.ajouterCarte(new Vengeance());
-            }
-
-            // Ajout des cartes pour Vol
-            for (int i = 0; i < Vol.NB_CARTES; i++) {
-                source.ajouterCarte(new Vol());
-            }
-
-            // Ajout des cartes pour Voyage
-            for (int i = 0; i < Voyage.NB_CARTES; i++) {
-                source.ajouterCarte(new Voyage());
-            }
-
-            // Ajout des cartes pour Destinee
-            for (int i = 0; i < Destinee.NB_CARTES; i++) {
-                source.ajouterCarte(new Destinee());
-            }
 
             source.melangerCartes();
             plateau.setLaSource(source);

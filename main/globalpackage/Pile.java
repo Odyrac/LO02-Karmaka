@@ -122,4 +122,23 @@ public class Pile {
         return nbCartesMosaiques;
     }
 
+
+// Methodes utiles pour le pouvoir des cartes
+    public Carte getCarteAleatoire() {
+        int random = (int) (Math.random() * cartes.length);
+        return cartes[random];
+    }
+
+    public void defausserCarte(Carte carte) {
+        // ajoute la carte à la fosse
+        Pile fosse = Partie.getInstance().getPlateau().getLaFosse();
+        fosse.ajouterCarte(carte);
+        // supprime la carte de la main
+        for (int i = 0; i < cartes.length; i++) {
+            if (cartes[i] == carte) {
+                supprimerCarte(i);
+                break;
+            }
+        }
+    }
 }

@@ -69,6 +69,7 @@ public class Joueur {
         int choix = Utils.inputInt("Choix : ", "jaune", true, 5);
 
         if (choix == 1) {
+            // on pioche une carte de la pile
             if (this.getPile().getNbCartes() == 0) {
                 Utils.println("Vous ne pouvez pas piocher car votre pile est vide", "rouge");
                 Utils.waitEnter();
@@ -81,6 +82,7 @@ public class Joueur {
                 joueurAdverse.debutTour(partie);
             }
         } else if (choix == 2) {
+            // on joue une carte de la main pour ses points
             Utils.clearConsole();
             Utils.println("Quelle carte souhaitez-vous jouer pour ses points :", "orange");
             Pile.cartesToString(this.getMain(), true, true);
@@ -100,11 +102,38 @@ public class Joueur {
                 joueurAdverse.debutTour(partie);
             }
         } else if (choix == 3) {
-            // PARTIE SUR LES POUVOIRS A DEV pour l'instant ça passe juste le tour
-            Utils.println("Vous passez votre tour A CHANGER POUR LES POUVOIRS", "gris");
-            Utils.waitEnter();
-            partie.setJoueurActuel(joueurAdverse);
-            joueurAdverse.debutTour(partie);
+            // on joue une carte de la main pour son pouvoir
+            Utils.clearConsole();
+            Utils.println("Quelle carte souhaitez-vous jouer pour son pouvoir :", "orange");
+            Pile.cartesToString(this.getMain(), true, true);
+            System.out.print("\n");
+            int choixCarte = Utils.inputInt("Choix : ", "jaune", true, this.getMain().getNbCartes());
+            if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
+                Utils.println("Erreur : choix invalide", "rouge");
+                Utils.waitEnter();
+                this.debutTour(partie);
+            } else {
+                Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
+                carteChoisie.utiliserPouvoir();
+                this.getMain().supprimerCarte(choixCarte - 1);
+                // On propose au joueur adverse de recuperer la carte jouee
+                Utils.println("Le joueur adverse veut-il récuperer la carte jouée ? (o/n)", "vert");
+                String choixRecuperer = Utils.inputString("Choix : ", "jaune");
+                if (choixRecuperer.equals("o")) {
+                    joueurAdverse.getMain().ajouterCarte(carteChoisie);
+                    Utils.println("Le joueur adverse a récupéré la carte jouée", "gris");
+                } else {
+                    partie.getPlateau().getLaFosse().ajouterCarte(carteChoisie);
+                    Utils.println("Le joueur adverse n'a pas récupéré la carte jouée", "gris");
+                }
+                // on supprime la carte de la main du joueur
+                this.getMain().supprimerCarte(choixCarte - 1);
+                Utils.println("Vous avez joué " + carteChoisie.getNom() + " pour son pouvoir", "gris");
+                Utils.waitEnter();
+                partie.setJoueurActuel(joueurAdverse);
+                joueurAdverse.debutTour(partie);
+            }
+
         } else if (choix == 4) {
             Utils.clearConsole();
             Utils.println("Quelle carte souhaitez-vous jouer pour votre futur :", "orange");
