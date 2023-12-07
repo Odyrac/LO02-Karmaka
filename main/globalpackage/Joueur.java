@@ -1,6 +1,7 @@
 public class Joueur {
     protected Pile main;
     protected Pile pile;
+    protected Pile cartesJoueesPourPouvoir;
     protected Pile vieFuture;
     protected OeuvresJoueur oeuvres;
     protected int anneauxKarmiques;
@@ -23,7 +24,6 @@ public class Joueur {
     }
 
     public void debutTour(Partie partie) {
-
         Utils.clearConsole();
 
         Joueur joueurAdverse = partie.getJoueurAdverse(this);
@@ -39,6 +39,36 @@ public class Joueur {
         Pile.cartesToString(this.getMain(), true, false);
 
         System.out.print("\n");
+
+        // on vide la pile de cartes jouées pour le pouvoir
+        this.cartesJoueesPourPouvoir = new Pile();
+
+        // On propose au joueur de recuperer les cartes jouées par l'adversaire pour le pouvoir
+        Pile cartesJoueesPourPouvoirAdverse = joueurAdverse.getCartesJoueesPourPouvoir();
+        // on vérifie si c'est vide
+        if (cartesJoueesPourPouvoirAdverse != null && cartesJoueesPourPouvoirAdverse.getNbCartes() > 0) {
+            for (int i = 0; i < cartesJoueesPourPouvoirAdverse.getNbCartes(); i++) {
+                Utils.println("Voulez-vous récupérer " + cartesJoueesPourPouvoirAdverse.getCarte(i).getNom() + " ? (o/n)", "vert");
+                String choixRecuperer = Utils.inputString("Choix : ", "jaune");
+                // si o on ajoute la carte à la main du joueur adverse
+                // si n on jette la carte dans la fosse
+                boolean choixValide = false;
+                while (!choixValide) {
+                    if (choixRecuperer.equals("o")) {
+                        joueurAdverse.getMain().ajouterCarte(cartesJoueesPourPouvoirAdverse.getCarte(i));
+                        Utils.println("Vous récupérez " + cartesJoueesPourPouvoirAdverse.getCarte(i).getNom(), "gris");
+                        choixValide = true;
+                    } else if (choixRecuperer.equals("n")) {
+                        partie.getPlateau().getLaFosse().ajouterCarte(cartesJoueesPourPouvoirAdverse.getCarte(i));
+                        Utils.println("Vous jetez " + cartesJoueesPourPouvoirAdverse.getCarte(i).getNom() + " dans la fosse", "gris");
+                        choixValide = true;
+                    } else {
+                        Utils.println("Erreur : choix invalide", "rouge");
+                        choixRecuperer = Utils.inputString("Choix : ", "jaune");
+                    }
+                }
+            }
+        }
 
         // on vérifie si les conditions pour la réincarnation sont réunies
         if (this.getMain().getNbCartes() == 0 && this.getPile().getNbCartes() == 0) {
@@ -115,20 +145,16 @@ public class Joueur {
             } else {
                 Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
                 carteChoisie.utiliserPouvoir();
-                this.getMain().supprimerCarte(choixCarte - 1);
-                // On propose au joueur adverse de recuperer la carte jouee
-                Utils.println("Le joueur adverse veut-il récuperer la carte jouée ? (o/n)", "vert");
-                String choixRecuperer = Utils.inputString("Choix : ", "jaune");
-                if (choixRecuperer.equals("o")) {
-                    joueurAdverse.getMain().ajouterCarte(carteChoisie);
-                    Utils.println("Le joueur adverse a récupéré la carte jouée", "gris");
-                } else {
-                    partie.getPlateau().getLaFosse().ajouterCarte(carteChoisie);
-                    Utils.println("Le joueur adverse n'a pas récupéré la carte jouée", "gris");
+
+                for (int i = 0; i < this.getCartesJoueesPourPouvoir().getNbCartes(); i++) {
+                    Utils.println("Vous avez joué " + this.getCartesJoueesPourPouvoir().getCarte(i).getNom() + " pour son pouvoir", "gris");
                 }
-                // on supprime la carte de la main du joueur
-                this.getMain().supprimerCarte(choixCarte - 1);
-                Utils.println("Vous avez joué " + carteChoisie.getNom() + " pour son pouvoir", "gris");
+                for (int i = 0; i < this.getCartesJoueesPourPouvoir().getNbCartes(); i++) {
+                    Carte carte = this.getCartesJoueesPourPouvoir().getCarte(i);
+                    int index = this.getMain().getCarteIndex(carte);
+                    this.getMain().supprimerCarte(index);
+                    Utils.println("Vous défaussez " + this.getCartesJoueesPourPouvoir().getCarte(i).getNom(), "gris");
+                }
                 Utils.waitEnter();
                 partie.setJoueurActuel(joueurAdverse);
                 joueurAdverse.debutTour(partie);
@@ -191,7 +217,6 @@ public class Joueur {
             Utils.waitEnter();
             if (prochainePosition == EnumEchelleKarmique.transcendance) {
                 partie.finPartie();
-                return;
             } else {
                 reincarnationActions(prochainePosition, partie);
             }
@@ -222,7 +247,6 @@ public class Joueur {
             this.anneauxKarmiques -= pointsManquants;
             if (prochainePosition == EnumEchelleKarmique.transcendance) {
                 partie.finPartie();
-                return;
             } else {
                 reincarnationActions(prochainePosition, partie);
             }
@@ -232,7 +256,7 @@ public class Joueur {
 
     public void reincarnationActions(EnumEchelleKarmique prochainePosition, Partie partie) {
         this.setPositionEchelleKarmique(prochainePosition);
-        // on défausse les oeuvres dans la fosses
+        // on défausse les œuvres dans la fosse
         for (int i = 0; i < this.getOeuvres().getNbCartes(); i++) {
             partie.getPlateau().getLaFosse().ajouterCarte(this.getOeuvres().piocherCarte());
         }
@@ -251,24 +275,17 @@ public class Joueur {
 
         partie.setJoueurActuel(partie.getJoueurAdverse(this));
         partie.getJoueurActuel().debutTour(partie);
-        return;
-    };
+    }
 
     public int enumKarmiquetoPoints(EnumEchelleKarmique echelle) {
-        switch (echelle) {
-            case bousier:
-                return 0;
-            case serpent:
-                return 4;
-            case loup:
-                return 5;
-            case singe:
-                return 6;
-            case transcendance:
-                return 7;
-            default:
-                return 0;
-        }
+        return switch (echelle) {
+            case bousier -> 0;
+            case serpent -> 4;
+            case loup -> 5;
+            case singe -> 6;
+            case transcendance -> 7;
+            default -> 0;
+        };
     }
 
     public String getPseudo() {
@@ -281,6 +298,10 @@ public class Joueur {
 
     public Pile getPile() {
         return pile;
+    }
+
+    public Pile getCartesJoueesPourPouvoir() {
+        return cartesJoueesPourPouvoir;
     }
 
     public Pile getVieFuture() {

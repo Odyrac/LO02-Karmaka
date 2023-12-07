@@ -98,6 +98,13 @@ public class Utils {
     }
 
     public static String inputString(String text, String color) {
+        // si c'est un bot qui joue, on fait un choix aléatoire entre o et n
+        if (Partie.getInstance().getJoueurActuel() instanceof JoueurVirtuel) {
+            String[] choix = {"o", "n"};
+            String choixAleatoire = choix[(int) (Math.random() * 2)];
+            Utils.println("[BOT] Choix du JoueurVirtuel : " + choixAleatoire, "rose");
+            return choixAleatoire;
+        }
         Scanner sc = new Scanner(System.in);
         Utils.println(text, color);
 
@@ -132,7 +139,7 @@ public class Utils {
         String bordureHautBas = couleurTexte + "+-------------+" + "\u001B[0m";
         String bordureCote = couleurTexte + "|             |" + "\u001B[0m";
         String contenu = couleurTexte + "|" + Utils.center(titre, 13) + "|" + "\u001B[0m";
-        String nombreCartesTexte = couleurTexte + "|" + Utils.center(String.valueOf(nombreCartes) + " cartes", 13) + "|"
+        String nombreCartesTexte = couleurTexte + "|" + Utils.center(nombreCartes + " cartes", 13) + "|"
                 + "\u001B[0m";
         String contenuDernierElement = (dernierElement != "")
                 ? couleurTexte + "|" + Utils.center("Dernière : ", 13) + "|" + "\u001B[0m"

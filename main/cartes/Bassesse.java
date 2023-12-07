@@ -16,6 +16,8 @@ public class Bassesse extends Carte{
             Joueur joueurAdverse = Partie.getInstance().getJoueurAdverse(joueurActuel);
             // on récupère la main du joueur adverse
             Pile mainAdverse = joueurAdverse.getMain();
+            // on ajoute la carte bassesse aux cartes jouées pour pouvoir
+            Partie.getInstance().getJoueurActuel().getCartesJoueesPourPouvoir().ajouterCarte(this);
             // on défausse 2 cartes au hasard
             for (int i = 0; i < 2; i++) {
                 // on récupère une carte au hasard

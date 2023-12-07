@@ -16,6 +16,8 @@ public class CoupDOeil extends Carte {
         Joueur joueurAdverse = Partie.getInstance().getJoueurAdverse(joueurActuel);
         // on récupère la main du joueur adverse
         Pile mainAdverse = joueurAdverse.getMain();
+        // on ajoute la carte coup d'oeil aux cartes jouées pour pouvoir
+        Partie.getInstance().getJoueurActuel().getCartesJoueesPourPouvoir().ajouterCarte(this);
         // on affiche la main du joueur adverse
         Utils.println("Voici la main de " + joueurAdverse.getPseudo() + " :", "vert");
         Pile.cartesToString(mainAdverse, true, true);
@@ -46,7 +48,7 @@ public class CoupDOeil extends Carte {
                 }
             }
             // on récupère la carte choisie
-            Carte carteChoisie = joueurActuel.getMain().getCarte(choixCarte - 1);
+            Carte carteChoisie = cartesSansCoupDOeil.getCarte(choixCarte - 1);
             // on la joue
             carteChoisie.utiliserPouvoir();
 
