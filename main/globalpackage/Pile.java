@@ -143,4 +143,13 @@ public class Pile {
         }
         return -1; // carte non trouvée
     }
+
+    public boolean contientCarte(Carte c) {
+        for (Carte carte : cartes) {
+            if (carte == c) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

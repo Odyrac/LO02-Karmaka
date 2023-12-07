@@ -189,8 +189,11 @@ public class Partie {
 //            }
 
             // On rempli au max la source de cartes Coups d'Oeil
-            for (int i = 0; i < 54; i++) {
-                source.ajouterCarte(new CoupDOeil());
+            for (int i = 0; i < 25; i++) {
+                source.ajouterCarte(new Incarnation());
+            }
+            for (int i = 0; i < 29; i++) {
+                source.ajouterCarte(new Fournaise());
             }
 
 

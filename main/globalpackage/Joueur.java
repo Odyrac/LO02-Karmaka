@@ -55,7 +55,7 @@ public class Joueur {
                 boolean choixValide = false;
                 while (!choixValide) {
                     if (choixRecuperer.equals("o")) {
-                        joueurAdverse.getMain().ajouterCarte(cartesJoueesPourPouvoirAdverse.getCarte(i));
+                        this.getMain().ajouterCarte(cartesJoueesPourPouvoirAdverse.getCarte(i));
                         Utils.println("Vous récupérez " + cartesJoueesPourPouvoirAdverse.getCarte(i).getNom(), "gris");
                         choixValide = true;
                     } else if (choixRecuperer.equals("n")) {
@@ -152,8 +152,12 @@ public class Joueur {
                 for (int i = 0; i < this.getCartesJoueesPourPouvoir().getNbCartes(); i++) {
                     Carte carte = this.getCartesJoueesPourPouvoir().getCarte(i);
                     int index = this.getMain().getCarteIndex(carte);
-                    this.getMain().supprimerCarte(index);
-                    Utils.println("Vous défaussez " + this.getCartesJoueesPourPouvoir().getCarte(i).getNom(), "gris");
+                    try {
+                        this.getMain().supprimerCarte(index);
+                        Utils.println("Vous défaussez " + this.getCartesJoueesPourPouvoir().getCarte(i).getNom(), "gris");
+                    } catch (Exception e) {
+                        Utils.println("La carte " + carte.getNom() + " à déjà été sortie de votre main", "rouge");
+                    }
                 }
                 Utils.waitEnter();
                 partie.setJoueurActuel(joueurAdverse);
