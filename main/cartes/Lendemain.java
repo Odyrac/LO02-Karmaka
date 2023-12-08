@@ -8,4 +8,60 @@ public class Lendemain extends Carte{
         this.nom = "Lendemain";
         this.description = "Puisez une carte à la Source. Vous pouvez ensuite jouer une autre carte.";
     }
+
+    public void utiliserPouvoir() {
+        // on récupère le joueur actuel
+        Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
+        // on récupère sa main
+        Pile main = joueurActuel.getMain();
+        // on ajoute la carte lendemain aux cartes jouées pour pouvoir
+        if (main.contientCarte(this)) {
+            Partie.getInstance().getJoueurActuel().getCartesJoueesPourPouvoir().ajouterCarte(this);
+        }
+        // on pioche une carte à la source
+        Carte cartePiochee = Partie.getInstance().getPlateau().getLaSource().piocherCarte();
+        joueurActuel.getMain().ajouterCarte(cartePiochee);
+        // on affiche la main du joueur
+        Utils.println("Voici votre main :", "vert");
+        Pile.cartesToString(main, true, true);
+
+        // on demande au joueur s'il veut jouer une autre carte
+        Utils.println("Voulez-vous jouer une autre carte ? (o/n)", "vert");
+        boolean choixValide = false;
+        while (!choixValide) {
+            String choix = Utils.inputString("Choix : ", "jaune");
+            if (choix.equals("o")) {
+                choixValide = true;
+                // on demande au joueur quelle carte il veut jouer parmi sa main - la carte lendemain
+                Utils.println("Quelle carte voulez-vous jouer ? (1-" + (joueurActuel.getMain().getNbCartes() - 1) + ")", "vert");
+                // on affiche la main du joueur sans la carte lendemain
+                Pile cartesSansLendemain = new Pile();
+                for (int i = 0; i < joueurActuel.getMain().getNbCartes(); i++) {
+                    if (joueurActuel.getMain().getCarte(i) != this) {
+                        cartesSansLendemain.ajouterCarte(joueurActuel.getMain().getCarte(i));
+                    }
+                }
+                Pile.cartesToString(cartesSansLendemain, true, true);
+                // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
+                int choixCarte = 0;
+                boolean carteValide = false;
+                while (!carteValide) {
+                    try {
+                        choixCarte = Utils.inputInt("Choix : ", "jaune", true, joueurActuel.getMain().getNbCartes() - 1);
+                        carteValide = true;
+                    } catch (Exception e) {
+                        Utils.println("Erreur : choix invalide", "rouge");
+                    }
+                }
+                // on récupère la carte choisie
+                Carte carteChoisie = cartesSansLendemain.getCarte(choixCarte - 1);
+                // on la joue
+                carteChoisie.utiliserPouvoir();
+            } else if (choix.equals("n")) {
+                choixValide = true;
+            } else {
+                Utils.println("Erreur : choix invalide", "rouge");
+            }
+        }
+    }
 }
