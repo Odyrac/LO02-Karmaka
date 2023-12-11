@@ -46,16 +46,17 @@ public class Recyclage extends Carte{
             // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
             int choixCarte = 0;
             boolean carteValide = false;
+            Carte carteChoisie = null;
             while (!carteValide) {
                 try {
                     choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesFosse.getNbCartes());
+                    // on récupère la carte choisie
+                    carteChoisie = cartesFosse.getCarte(choixCarte - 1);
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
                 }
             }
-            // on récupère la carte choisie
-            Carte carteChoisie = cartesFosse.getCarte(choixCarte - 1);
             // on l'ajoute à la vie future du joueur actuel
             vieFuture.ajouterCarte(carteChoisie);
             // on affiche un message
