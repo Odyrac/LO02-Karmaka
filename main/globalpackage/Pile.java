@@ -8,9 +8,7 @@ public class Pile {
 
     public void ajouterCarte(Carte carte) {
         Carte[] newCartes = new Carte[cartes.length + 1];
-        for (int i = 0; i < cartes.length; i++) {
-            newCartes[i] = cartes[i];
-        }
+        System.arraycopy(cartes, 0, newCartes, 0, cartes.length);
         newCartes[cartes.length] = carte;
         cartes = newCartes;
     }
@@ -21,9 +19,7 @@ public class Pile {
         // on crée un nouveau paquet de cartes avec une carte en moins
         Carte[] newCartes = new Carte[cartes.length - 1];
         // on copie toutes les cartes sauf la dernière dans le nouveau paquet
-        for (int i = 0; i < cartes.length - 1; i++) {
-            newCartes[i] = cartes[i];
-        }
+        System.arraycopy(cartes, 0, newCartes, 0, cartes.length - 1);
         // on remplace le paquet de cartes par le nouveau
         cartes = newCartes;
         // on retourne la carte piochée
@@ -32,12 +28,9 @@ public class Pile {
 
     public void supprimerCarte(int index) {
         Carte[] newCartes = new Carte[cartes.length - 1];
-        for (int i = 0; i < index; i++) {
-            newCartes[i] = cartes[i];
-        }
-        for (int i = index; i < cartes.length - 1; i++) {
-            newCartes[i] = cartes[i + 1];
-        }
+        if (index >= 0) System.arraycopy(cartes, 0, newCartes, 0, index);
+        if (cartes.length - 1 - index >= 0)
+            System.arraycopy(cartes, index + 1, newCartes, index, cartes.length - 1 - index);
         cartes = newCartes;
     }
 
@@ -122,4 +115,41 @@ public class Pile {
         return nbCartesMosaiques;
     }
 
+
+// Methodes utiles pour le pouvoir des cartes
+    public Carte getCarteAleatoire() {
+        int random = (int) (Math.random() * cartes.length);
+        return cartes[random];
+    }
+
+    public void defausserCarte(Carte carte) {
+        // ajoute la carte à la fosse
+        Pile fosse = Partie.getInstance().getPlateau().getLaFosse();
+        fosse.ajouterCarte(carte);
+        // supprime la carte de la main
+        for (int i = 0; i < cartes.length; i++) {
+            if (cartes[i] == carte) {
+                supprimerCarte(i);
+                break;
+            }
+        }
+    }
+
+    public int getCarteIndex(Carte carte) {
+        for (int i = 0; i < cartes.length; i++) {
+            if (cartes[i] == carte) {
+                return i;
+            }
+        }
+        return -1; // carte non trouvée
+    }
+
+    public boolean contientCarte(Carte c) {
+        for (Carte carte : cartes) {
+            if (carte == c) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

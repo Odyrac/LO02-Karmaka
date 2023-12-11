@@ -188,6 +188,8 @@ public class Partie {
                 source.ajouterCarte(new Destinee());
             }
 
+
+
             source.melangerCartes();
             plateau.setLaSource(source);
 

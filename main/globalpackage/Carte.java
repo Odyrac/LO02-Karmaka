@@ -12,6 +12,9 @@ public class Carte {
         return "Nom: " + this.nom + "\nDescription: " + this.description + "\nPoints: " + this.points + "\nCouleur: " + this.couleur;
     }
 
+//    fonction pour le pouvoir de la carte
+    public void utiliserPouvoir() {}
+
 
     public EnumCouleur getCouleur() {
         return couleur;
