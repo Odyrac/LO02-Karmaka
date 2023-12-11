@@ -37,18 +37,18 @@ public class Duperie extends Carte{
         while (!carteValide) {
             try {
                 choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesMainAdverse.getNbCartes());
+                // on récupère la carte choisie
+                Carte carteChoisie = cartesMainAdverse.getCarte(choixCarte - 1);
+                // on l'ajoute à la main du joueur actuel
+                main.ajouterCarte(carteChoisie);
+                // on la retire de la main du joueur adverse
+                mainAdverse.supprimerCarte(mainAdverse.getCarteIndex(carteChoisie));
+                // on affiche un message
+                Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre main", "vert");
                 carteValide = true;
             } catch (Exception e) {
                 Utils.println("Erreur : choix invalide", "rouge");
             }
         }
-        // on récupère la carte choisie
-        Carte carteChoisie = cartesMainAdverse.getCarte(choixCarte - 1);
-        // on l'ajoute à la main du joueur actuel
-        main.ajouterCarte(carteChoisie);
-        // on la retire de la main du joueur adverse
-        mainAdverse.supprimerCarte(mainAdverse.getCarteIndex(carteChoisie));
-        // on affiche un message
-        Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre main", "vert");
     }
 }

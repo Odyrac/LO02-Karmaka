@@ -35,24 +35,23 @@ public class Destinee extends Carte {
             while (!carteValide) {
                 try {
                     choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesSource.getNbCartes());
+                    if (choixCarte != 0) {
+                        // on récupère la carte choisie
+                        Carte carteChoisie = cartesSource.getCarte(choixCarte - 1);
+                        // on l'ajoute à la vie future du joueur
+                        joueurActuel.getVieFuture().ajouterCarte(carteChoisie);
+                        // on la retire de la source et de la pile cartesSource
+                        source.supprimerCarte(source.getCarteIndex(carteChoisie));
+                        cartesSource.supprimerCarte(cartesSource.getCarteIndex(carteChoisie));
+                        // on affiche un message
+                        Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre vie future", "vert");
+                    }
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
                 }
             }
-            if (choixCarte != 0) {
-                // on récupère la carte choisie
-                Carte carteChoisie = cartesSource.getCarte(choixCarte - 1);
-                // on l'ajoute à la vie future du joueur
-                joueurActuel.getVieFuture().ajouterCarte(carteChoisie);
-                // on la retire de la source et de la pile cartesSource
-                source.supprimerCarte(source.getCarteIndex(carteChoisie));
-                cartesSource.supprimerCarte(cartesSource.getCarteIndex(carteChoisie));
-                // on affiche un message
-                Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre vie future", "vert");
-                // on réinitialise la variable carteValide
-                carteValide = false;
-            }
+
         }
     }
 

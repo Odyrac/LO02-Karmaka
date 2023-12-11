@@ -32,18 +32,14 @@ public class DernierSouffle extends Carte{
             while (!carteValide) {
                 try {
                     choixCarte = Utils.inputInt("Choix : ", "jaune", true, mainAdverse.getNbCartes());
+                    // on récupère la carte choisie
+                    Carte carteChoisie = mainAdverse.getCarte(choixCarte - 1);
+                    mainAdverse.defausserCarte(carteChoisie);
+                    Utils.println("Vous avez défaussé la carte " + carteChoisie.getNom() + " de la main de " + joueurAdverse.getPseudo(), "vert");
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
                 }
-            }
-            try {
-                // on récupère la carte choisie
-                Carte carteChoisie = mainAdverse.getCarte(choixCarte - 1);
-                mainAdverse.defausserCarte(carteChoisie);
-                Utils.println("Vous avez défaussé la carte " + carteChoisie.getNom() + " de la main de " + joueurAdverse.getPseudo(), "vert");
-            } catch (Exception e) {
-                Utils.println("Erreur : choix invalide", "rouge");
             }
         } else {
             Utils.println("Le joueur adverse n'a pas de carte à défausser", "vert");

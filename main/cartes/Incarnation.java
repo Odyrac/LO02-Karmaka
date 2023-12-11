@@ -30,22 +30,22 @@ public class Incarnation extends Carte{
             while (!carteValide) {
                 try {
                     choixCarte = Utils.inputInt("Choix : ", "jaune", true, oeuvres.getNbCartes());
+                    // on récupère la carte choisie
+                    Carte carteChoisie = oeuvres.getCarte(choixCarte - 1);
+                    //on crée une instance temporaire de la carte choisie pour ne pas rajouter et on utilise son pouvoir
+                    Carte carteTemp = null;
+                    try {
+                        carteTemp = carteChoisie.getClass().getDeclaredConstructor().newInstance();
+                        carteTemp.utiliserPouvoir();
+                        // on supprime la carte temporaire
+                        carteTemp = null;
+                    } catch (Exception e) {
+                        Utils.println("Erreur : impossible de copier la carte", "rouge");
+                    }
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
                 }
-            }
-            // on récupère la carte choisie
-            Carte carteChoisie = oeuvres.getCarte(choixCarte - 1);
-            //on crée une instance temporaire de la carte choisie pour ne pas rajouter et on utilise son pouvoir
-            Carte carteTemp = null;
-            try {
-                carteTemp = carteChoisie.getClass().getDeclaredConstructor().newInstance();
-                carteTemp.utiliserPouvoir();
-                // on supprime la carte temporaire
-                carteTemp = null;
-            } catch (Exception e) {
-                Utils.println("Erreur : impossible de copier la carte", "rouge");
             }
         } else {
             Utils.println("Vous n'avez pas d'oeuvre à copier", "vert");

@@ -56,14 +56,14 @@ public class Voyage extends Carte{
             while (!carteValide) {
                 try {
                     choixCarte = Utils.inputInt("Choix : ", "jaune", true, main.getNbCartes());
+                    // on récupère la carte choisie et on la joue
+                    Carte carteChoisie = main.getCarte(choixCarte - 1);
+                    carteChoisie.utiliserPouvoir();
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
                 }
             }
-            // on récupère la carte choisie et on la joue
-            Carte carteChoisie = main.getCarte(choixCarte - 1);
-            carteChoisie.utiliserPouvoir();
         }
     }
 }
