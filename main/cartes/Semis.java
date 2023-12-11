@@ -42,20 +42,20 @@ public class Semis extends Carte{
                 while (!carteValide) {
                     try {
                         choixCarte = Utils.inputInt("Choix : ", "jaune", true, main.getNbCartes());
+                        // on récupère la carte choisie
+                        Carte carteChoisie = main.getCarte(choixCarte - 1);
+                        // on l'ajoute à la vie future
+                        joueurActuel.getVieFuture().ajouterCarte(carteChoisie);
+                        // on la retire de la main
+                        int index = main.getCarteIndex(carteChoisie);
+                        main.supprimerCarte(index);
+                        // on affiche un message
+                        Utils.println("Vous avez placé la carte " + carteChoisie.getNom() + " sur votre vie future", "vert");
                         carteValide = true;
                     } catch (Exception e) {
                         Utils.println("Erreur : choix invalide", "rouge");
                     }
                 }
-                // on récupère la carte choisie
-                Carte carteChoisie = main.getCarte(choixCarte - 1);
-                // on l'ajoute à la vie future
-                joueurActuel.getVieFuture().ajouterCarte(carteChoisie);
-                // on la retire de la main
-                int index = main.getCarteIndex(carteChoisie);
-                main.supprimerCarte(index);
-                // on affiche un message
-                Utils.println("Vous avez placé la carte " + carteChoisie.getNom() + " sur votre vie future", "vert");
             } else {
                 Utils.println("Vous n'avez plus de cartes dans votre main", "vert");
             }

@@ -36,24 +36,21 @@ public class Jubile extends Carte{
             while (!carteValide) {
                 try {
                     choixCarte = Utils.inputInt("Quelle carte voulez-vous placer sur vos oeuvres ? (1-" + main.getNbCartes() + ") (0 pour quitter)", "jaune", true, main.getNbCartes());
+                    // on récupère la carte choisie
+                    Carte carteChoisie = main.getCarte(choixCarte - 1);
+                    if (choixCarte == 0) {
+                        carteValide = true;
+                        break;
+                    }
+                    // on la place sur les oeuvres
+                    joueurActuel.getOeuvres().ajouterCarte(carteChoisie);
+                    // on la retire de la main
+                    main.supprimerCarte(main.getCarteIndex(carteChoisie));
+                    Utils.println("Vous avez placé la carte " + carteChoisie.getNom() + " sur vos oeuvres", "vert");
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
                 }
-            }
-            if (choixCarte == 0) {
-                break;
-            }
-            try {
-                // on récupère la carte choisie
-                Carte carteChoisie = main.getCarte(choixCarte - 1);
-                // on la place sur les oeuvres
-                joueurActuel.getOeuvres().ajouterCarte(carteChoisie);
-                // on la retire de la main
-                main.supprimerCarte(main.getCarteIndex(carteChoisie));
-                Utils.println("Vous avez placé la carte " + carteChoisie.getNom() + " sur vos oeuvres", "vert");
-            } catch (Exception e) {
-                Utils.println("Erreur : choix invalide", "rouge");
             }
         }
     }

@@ -58,15 +58,15 @@ public class Panique extends Carte{
                 while (!carteValide) {
                     try {
                         choixCarte = Utils.inputInt("Choix : ", "jaune", true, joueurActuel.getMain().getNbCartes() - 1);
+                        // on récupère la carte choisie
+                        Carte carteChoisie = cartesSansPanique.getCarte(choixCarte - 1);
+                        // on la joue
+                        carteChoisie.utiliserPouvoir();
                         carteValide = true;
                     } catch (Exception e) {
                         Utils.println("Erreur : choix invalide", "rouge");
                     }
                 }
-                // on récupère la carte choisie
-                Carte carteChoisie = cartesSansPanique.getCarte(choixCarte - 1);
-                // on la joue
-                carteChoisie.utiliserPouvoir();
             } else if (choix.equals("n")) {
                 choixValide = true;
             } else {

@@ -28,19 +28,19 @@ public class Transmigration extends Carte {
         while (!carteValide) {
             try {
                 choixCarte = Utils.inputInt("Choix : ", "jaune", true, joueurActuel.getVieFuture().getNbCartes());
+                // on récupère la carte choisie
+                Carte carteChoisie = joueurActuel.getVieFuture().getCarte(choixCarte - 1);
+                // on l'ajoute à la main
+                main.ajouterCarte(carteChoisie);
+                // on la retire de la vie future
+                int index = joueurActuel.getVieFuture().getCarteIndex(carteChoisie);
+                joueurActuel.getVieFuture().supprimerCarte(index);
+                // on affiche un message
+                Utils.println("Vous avez placé la carte " + carteChoisie.getNom() + " dans votre main", "vert");
                 carteValide = true;
             } catch (Exception e) {
                 Utils.println("Erreur : choix invalide", "rouge");
             }
         }
-        // on récupère la carte choisie
-        Carte carteChoisie = joueurActuel.getVieFuture().getCarte(choixCarte - 1);
-        // on l'ajoute à la main
-        main.ajouterCarte(carteChoisie);
-        // on la retire de la vie future
-        int index = joueurActuel.getVieFuture().getCarteIndex(carteChoisie);
-        joueurActuel.getVieFuture().supprimerCarte(index);
-        // on affiche un message
-        Utils.println("Vous avez placé la carte " + carteChoisie.getNom() + " dans votre main", "vert");
     }
 }

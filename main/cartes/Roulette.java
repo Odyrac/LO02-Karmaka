@@ -43,17 +43,17 @@ public class Roulette extends Carte{
                 while (!carteValide) {
                     try {
                         choixCarte = Utils.inputInt("Choix : ", "jaune", true, main.getNbCartes());
+                        // on récupère la carte choisie
+                        Carte carteChoisie = main.getCarte(choixCarte - 1);
+                        // on la défausse
+                        main.defausserCarte(carteChoisie);
+                        // on affiche un message
+                        Utils.println("Vous avez défaussé la carte " + carteChoisie.getNom(), "vert");
                         carteValide = true;
                     } catch (Exception e) {
                         Utils.println("Erreur : choix invalide", "rouge");
                     }
                 }
-                // on récupère la carte choisie
-                Carte carteChoisie = main.getCarte(choixCarte - 1);
-                // on la défausse
-                main.defausserCarte(carteChoisie);
-                // on affiche un message
-                Utils.println("Vous avez défaussé la carte " + carteChoisie.getNom(), "vert");
             }
             // on affiche la main du joueur
             Utils.println("Voici votre main :", "vert");

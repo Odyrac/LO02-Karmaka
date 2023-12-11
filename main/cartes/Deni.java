@@ -37,20 +37,16 @@ public class Deni extends Carte {
         while (!carteValide) {
             try {
                 choixCarte = Utils.inputInt("Choix : ", "jaune", true, main.getNbCartes() - 1);
+                // on récupère la carte choisie
+                Carte carteChoisie = main.getCarte(choixCarte - 1);
+                main.defausserCarte(carteChoisie);
+                Utils.println("Vous avez défaussé la carte " + carteChoisie.getNom() + " de votre main", "vert");
+                // on utilise le pouvoir de la carte choisie
+                carteChoisie.utiliserPouvoir();
                 carteValide = true;
             } catch (Exception e) {
                 Utils.println("Erreur : choix invalide", "rouge");
             }
-        }
-        try {
-            // on récupère la carte choisie
-            Carte carteChoisie = main.getCarte(choixCarte - 1);
-            main.defausserCarte(carteChoisie);
-            Utils.println("Vous avez défaussé la carte " + carteChoisie.getNom() + " de votre main", "vert");
-            // on utilise le pouvoir de la carte choisie
-            carteChoisie.utiliserPouvoir();
-        } catch (Exception e) {
-            Utils.println("Erreur : choix invalide", "rouge");
         }
     }
 }

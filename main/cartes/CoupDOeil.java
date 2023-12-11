@@ -43,19 +43,19 @@ public class CoupDOeil extends Carte {
             // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
             int choixCarte = 0;
             boolean carteValide = false;
+            Carte carteChoisie;
             while (!carteValide) {
                 try {
                     choixCarte = Utils.inputInt("Choix : ", "jaune", true, joueurActuel.getMain().getNbCartes() - 1);
+                    // on récupère la carte choisie
+                    carteChoisie = cartesSansCoupDOeil.getCarte(choixCarte - 1);
+                    // on la joue
+                    carteChoisie.utiliserPouvoir();
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
                 }
             }
-            // on récupère la carte choisie
-            Carte carteChoisie = cartesSansCoupDOeil.getCarte(choixCarte - 1);
-            // on la joue
-            carteChoisie.utiliserPouvoir();
-
         }
     }
 }

@@ -44,20 +44,20 @@ public class Sauvetage extends Carte{
             while (!carteValide) {
                 try {
                     choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesFosse.getNbCartes());
+                    // on récupère la carte choisie
+                    Carte carteChoisie = cartesFosse.getCarte(choixCarte - 1);
+                    // on l'ajoute à la main du joueur actuel
+                    main.ajouterCarte(carteChoisie);
+                    // on affiche un message
+                    Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre main", "vert");
+                    // on supprime la carte de la fosse
+                    int index = fosse.getCarteIndex(carteChoisie);
+                    fosse.supprimerCarte(index);
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
                 }
             }
-            // on récupère la carte choisie
-            Carte carteChoisie = cartesFosse.getCarte(choixCarte - 1);
-            // on l'ajoute à la main du joueur actuel
-            main.ajouterCarte(carteChoisie);
-            // on affiche un message
-            Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre main", "vert");
-            // on supprime la carte de la fosse
-            int index = fosse.getCarteIndex(carteChoisie);
-            fosse.supprimerCarte(index);
         }
     }
 }
