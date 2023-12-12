@@ -63,7 +63,7 @@ public class Utils {
         Utils.println("--------------------------------------------------", "gris");
     }
 
-    public static int inputInt(String text, String color, boolean enJeu, int nombreChoix) {
+    public static int inputInt(String text, String color, boolean enJeu, int nombreChoix) throws Exception{
         Scanner sc = new Scanner(System.in);
         Utils.println(text, color);
 
@@ -82,6 +82,9 @@ public class Utils {
         }
 
         int input = sc.nextInt();
+        if(input < 1 || input > nombreChoix) {
+            throw new Exception();
+        }
         return input;
     }
 

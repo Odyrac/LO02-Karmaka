@@ -60,6 +60,16 @@ public class Roulette extends Carte{
             Pile.cartesToString(main, true, true);
             // on demande au joueur combien de cartes il veut piocher
             Utils.println("Combien de cartes voulez-vous piocher ? (0-" + (choixNbCarte + 1) + ")", "vert");
+            // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
+            carteValide = false;
+            while (!carteValide) {
+                try {
+                    choixNbCarte = Utils.inputInt("Choix : ", "jaune", true, choixNbCarte + 1);
+                    carteValide = true;
+                } catch (Exception e) {
+                    Utils.println("Erreur : choix invalide", "rouge");
+                }
+            }
             // on pioche les cartes
             for (int i = 0; i < choixNbCarte + 1; i++) {
                 // on récupère la carte piochée
