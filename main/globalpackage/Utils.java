@@ -63,7 +63,7 @@ public class Utils {
         Utils.println("--------------------------------------------------", "gris");
     }
 
-    public static int inputInt(String text, String color, boolean enJeu, int nombreChoix) throws Exception{
+    public static int inputInt(String text, String color, boolean enJeu, int nombreChoix) {
         Scanner sc = new Scanner(System.in);
         Utils.println(text, color);
 
@@ -75,15 +75,31 @@ public class Utils {
             return choix;
         }
 
-        while (!sc.hasNextInt()) {
-            Utils.println("Veuillez entrer un entier valide.", "rouge");
-            sc.next(); // consommer l'entrée invalide
-            Utils.println(text, color);
-        }
+        boolean choixValide = false;
+        int input = 0;
 
-        int input = sc.nextInt();
-        if(input < 1 || input > nombreChoix) {
-            throw new Exception();
+//        while (!sc.hasNextInt()) {
+//            Utils.println("Veuillez entrer un entier valide.", "rouge");
+//            sc.next(); // consommer l'entrée invalide
+//            Utils.println(text, color);
+//        }
+
+        while (!choixValide) {
+            try {
+                while (!sc.hasNextInt()) {
+                    Utils.println("Veuillez entrer un entier valide.", "rouge");
+                    sc.next(); // consommer l'entrée invalide
+                    Utils.println(text, color);
+                }
+                input = sc.nextInt();
+                if (input >= 1 && input <= nombreChoix) {
+                    choixValide = true;
+                } else {
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                Utils.println("Erreur : choix invalide", "rouge");
+            }
         }
         return input;
     }
