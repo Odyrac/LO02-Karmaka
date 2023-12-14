@@ -1,10 +1,20 @@
-
+/**
+ * La classe Partie gère le déroulement d'une partie du jeu.
+ * Elle implémente le modèle Singleton.
+ */
 public class Partie {
     private Joueur joueurActuel;
     private Plateau plateau;
 
+    // Instance unique de la classe Partie
     private static Partie instance;
 
+    /**
+     * Méthode statique permettant d'obtenir l'instance unique de Partie.
+     * Si l'instance n'existe pas, elle est créée.
+     * 
+     * @return L'instance unique de Partie.
+     */
     public static Partie getInstance() {
         if (instance == null) {
             instance = new Partie();
@@ -12,15 +22,23 @@ public class Partie {
         return instance;
     }
 
+    /**
+     * Constructeur privé de la classe Partie.
+     */
     private Partie() {
-        //
+        // Constructeur privé pour assurer la singleton-ness
     }
 
+    /**
+     * Initialise une nouvelle partie.
+     * Si la partie passée en paramètre est nulle, une nouvelle partie est créée.
+     * Les joueurs et le plateau sont initialisés en fonction du choix du joueur.
+     * 
+     * @param partie La partie à initialiser.
+     */
     public void debutPartie(Partie partie) {
-
         if (partie == null) {
             partie = Partie.getInstance();
-
             Plateau plateau = new Plateau();
 
             Utils.clearConsole();
@@ -188,8 +206,6 @@ public class Partie {
                 source.ajouterCarte(new Destinee());
             }
 
-
-
             source.melangerCartes();
             plateau.setLaSource(source);
 
@@ -207,16 +223,14 @@ public class Partie {
                 }
             }
 
-
-
             partie.getJoueurActuel().debutTour(partie);
-
         }
-
     }
 
-
-
+    /**
+     * Affiche l'écran de fin de partie.
+     * Indique le gagnant de la partie.
+     */
     public void finPartie() {
         Utils.clearConsole();
         Utils.println("Vous avez atteint la transcendance !", "orange");
@@ -226,22 +240,48 @@ public class Partie {
         Main.main(null);
     }
 
+    /**
+     * Définit le plateau de la partie.
+     * 
+     * @param plateau Le plateau de jeu.
+     */
     public void setPlateau(Plateau plateau) {
         this.plateau = plateau;
     }
 
+    /**
+     * Obtient le plateau de la partie.
+     * 
+     * @return Le plateau de jeu.
+     */
     public Plateau getPlateau() {
         return plateau;
     }
 
+    /**
+     * Définit le joueur actuel.
+     * 
+     * @param joueur Le joueur actuel.
+     */
     public void setJoueurActuel(Joueur joueur) {
         this.joueurActuel = joueur;
     }
 
+    /**
+     * Obtient le joueur actuel.
+     * 
+     * @return Le joueur actuel.
+     */
     public Joueur getJoueurActuel() {
         return joueurActuel;
     }
 
+    /**
+     * Obtient le joueur adverse d'un joueur donné.
+     * 
+     * @param joueur Le joueur dont on veut l'adversaire.
+     * @return Le joueur adverse.
+     */
     public Joueur getJoueurAdverse(Joueur joueur) {
         Joueur[] joueurs = plateau.getJoueurs();
         if (joueur == joueurs[0]) {
@@ -250,5 +290,4 @@ public class Partie {
             return joueurs[0];
         }
     }
-
 }

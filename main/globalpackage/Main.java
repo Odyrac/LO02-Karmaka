@@ -1,9 +1,18 @@
-
+/**
+ * La classe Main est la classe principale du jeu.
+ */
 public class Main {
+
+    /**
+     * Méthode principale qui lance le jeu.
+     * @param args Les arguments de la ligne de commande (non utilisés ici).
+     */
     public static void main(String[] args) {
 
+        // Efface la console
         Utils.clearConsole();
 
+        // Affiche le titre du jeu en art ASCII
         Utils.println("Ladies and Gentlemen, bienvenue sur :\n", "cyan");
         Utils.println("██╗  ██╗ █████╗ ██████╗ ███╗   ███╗ █████╗ ██╗  ██╗ █████╗ ", "mosaique");
         Utils.println("██║ ██╔╝██╔══██╗██╔══██╗████╗ ████║██╔══██╗██║ ██╔╝██╔══██╗", "mosaique");
@@ -12,41 +21,44 @@ public class Main {
         Utils.println("██║  ██╗██║  ██║██║  ██║██║ ╚═╝ ██║██║  ██║██║  ██╗██║  ██║", "mosaique");
         Utils.println("╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝", "mosaique");
 
-        // menu avec nouvelle partie, charger une partie, et crédits
-        // on demande au joueur de choisir
-
+        // Affiche le menu avec les options Nouvelle partie, Charger une partie, Crédits, et Quitter
         System.out.print("\n");
         Utils.println("1. Nouvelle partie", "vert");
         Utils.println("2. Charger une partie", "vert");
         Utils.println("3. Crédits", "vert");
         Utils.println("4. Quitter", "vert");
         System.out.print("\n");
+
+        // Demande au joueur de faire un choix
         int choix = Utils.inputInt("Choix : ", "jaune", false, 4);
 
         if (choix == 1) {
-            // on lance une nouvelle partie
+            // Lance une nouvelle partie
             Partie.getInstance().debutPartie(null);
-  
 
         } else if (choix == 2) {
-            // on charge une partie
+            // Charge une partie (à implémenter)
 
         } else if (choix == 3) {
-            // on affiche les crédits
+            // Affiche les crédits
             credits();
+
         } else if (choix == 4) {
-            // on quitte le jeu
+            // Quitte le jeu
             System.exit(0);
+
         } else {
-            // on affiche un message d'erreur
+            // Affiche un message d'erreur en cas de choix invalide
             Utils.clearConsole();
             Utils.println("Erreur : choix invalide", "rouge");
             Utils.waitEnter();
             main(null);
         }
-
     }
 
+    /**
+     * Affiche les crédits du projet.
+     */
     public static void credits() {
         Utils.clearConsole();
         Utils.println("Ce projet est développé dans le cadre de l'UE LO02.", "vert");
@@ -54,9 +66,8 @@ public class Main {
         Utils.println(" - Thomas MATAMBA", "mosaique");
         Utils.println(" - Louis HALLEY", "mosaique");
 
+        // Attend une action de l'utilisateur avant de revenir au menu principal
         Utils.waitEnter();
         main(null);
-
     }
-
 }

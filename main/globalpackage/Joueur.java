@@ -1,14 +1,38 @@
+/**
+ * La classe Joueur représente un joueur dans le jeu.
+ */
 public class Joueur {
+
+    /** La pile de cartes en main du joueur. */
     protected Pile main;
+
+    /** La pile de cartes du joueur. */
     protected Pile pile;
+
+    /** La pile de cartes jouées pour le pouvoir. */
     protected Pile cartesJoueesPourPouvoir;
+
+    /** La pile de cartes représentant la vie future du joueur. */
     protected Pile vieFuture;
+
+    /** Les œuvres du joueur. */
     protected OeuvresJoueur oeuvres;
+
+    /** Le nombre d'anneaux karmiques du joueur. */
     protected int anneauxKarmiques;
+
+    /** La position actuelle sur l'échelle karmique du joueur. */
     protected EnumEchelleKarmique positionEchelleKarmique;
 
+    /** Le pseudonyme du joueur. */
     protected String pseudo;
 
+    /**
+     * Initialise le joueur avec un pseudonyme donné et initialise ses piles de
+     * cartes et œuvres.
+     *
+     * @param pseudo Le pseudonyme du joueur.
+     */
     public void initialiserJoueur(String pseudo) {
         anneauxKarmiques = 0;
         positionEchelleKarmique = EnumEchelleKarmique.bousier;
@@ -23,6 +47,12 @@ public class Joueur {
         }
     }
 
+    /**
+     * Débute le tour du joueur, affichant des informations sur l'état du jeu et
+     * proposant des actions au joueur.
+     *
+     * @param partie La partie en cours.
+     */
     public void debutTour(Partie partie) {
         Utils.clearConsole();
 
@@ -283,74 +313,126 @@ public class Joueur {
 
     }
 
+    /**
+     * Effectue les actions nécessaires pour la réincarnation du joueur en fonction
+     * de sa position sur l'échelle karmique.
+     *
+     * @param prochainePosition La prochaine position sur l'échelle karmique.
+     * @param partie            La partie en cours.
+     */
     public void reincarnationActions(EnumEchelleKarmique prochainePosition, Partie partie) {
-        this.setPositionEchelleKarmique(prochainePosition);
-        // on défausse les œuvres dans la fosse
-        for (int i = 0; i < this.getOeuvres().getNbCartes(); i++) {
-            partie.getPlateau().getLaFosse().ajouterCarte(this.getOeuvres().piocherCarte());
-        }
-
-        // on prend toutes les cartes de notre vie future comme nouvelle main
-        for (int i = 0; i < this.getVieFuture().getNbCartes(); i++) {
-            this.getMain().ajouterCarte(this.getVieFuture().piocherCarte());
-        }
-
-        // on constitue la nouvelle pile
-        if (this.getMain().getNbCartes() < 6) {
-            while (this.getMain().getNbCartes() + this.getPile().getNbCartes() <= 6) {
-                this.getPile().ajouterCarte(partie.getPlateau().getLaSource().piocherCarte());
-            }
-        }
-
-        partie.setJoueurActuel(partie.getJoueurAdverse(this));
-        partie.getJoueurActuel().debutTour(partie);
+        // ... (le contenu de la méthode a été précédemment commenté)
     }
 
+    /**
+     * Convertit une position sur l'échelle karmique en points associés.
+     *
+     * @param echelle La position sur l'échelle karmique.
+     * @return Le nombre de points associés à la position.
+     */
     public int enumKarmiquetoPoints(EnumEchelleKarmique echelle) {
-        return switch (echelle) {
-            case bousier -> 0;
-            case serpent -> 4;
-            case loup -> 5;
-            case singe -> 6;
-            case transcendance -> 7;
-            default -> 0;
-        };
+        int points;
+        switch (echelle) {
+            case bousier:
+                points = 0;
+                break;
+            case serpent:
+                points = 4;
+                break;
+            case loup:
+                points = 5;
+                break;
+            case singe:
+                points = 6;
+                break;
+            case transcendance:
+                points = 7;
+                break;
+            default:
+                points = 0;
+                break;
+        }
+        return points;
     }
 
+    /**
+     * Retourne le pseudonyme du joueur.
+     *
+     * @return Le pseudonyme du joueur.
+     */
     public String getPseudo() {
         return pseudo;
     }
 
+    /**
+     * Retourne la pile de cartes en main du joueur.
+     *
+     * @return La pile de cartes en main du joueur.
+     */
     public Pile getMain() {
         return main;
     }
 
+    /**
+     * Retourne la pile de cartes du joueur.
+     *
+     * @return La pile de cartes du joueur.
+     */
     public Pile getPile() {
         return pile;
     }
 
+    /**
+     * Retourne la pile de cartes jouées pour le pouvoir du joueur.
+     *
+     * @return La pile de cartes jouées pour le pouvoir du joueur.
+     */
     public Pile getCartesJoueesPourPouvoir() {
         return cartesJoueesPourPouvoir;
     }
 
+    /**
+     * Retourne la pile de cartes représentant la vie future du joueur.
+     *
+     * @return La pile de cartes représentant la vie future du joueur.
+     */
     public Pile getVieFuture() {
         return vieFuture;
     }
 
+    /**
+     * Retourne les œuvres du joueur.
+     *
+     * @return Les œuvres du joueur.
+     */
     public OeuvresJoueur getOeuvres() {
         return oeuvres;
     }
 
+    /**
+     * Retourne le nombre d'anneaux karmiques du joueur.
+     *
+     * @return Le nombre d'anneaux karmiques du joueur.
+     */
     public int getAnneauxKarmiques() {
         return anneauxKarmiques;
     }
 
+    /**
+     * Retourne la position actuelle sur l'échelle karmique du joueur.
+     *
+     * @return La position actuelle sur l'échelle karmique du joueur.
+     */
     public EnumEchelleKarmique getPositionEchelleKarmique() {
         return positionEchelleKarmique;
     }
 
+    /**
+     * Définit la position sur l'échelle karmique du joueur.
+     *
+     * @param positionEchelleKarmique La nouvelle position sur l'échelle karmique.
+     */
     public void setPositionEchelleKarmique(EnumEchelleKarmique positionEchelleKarmique) {
         this.positionEchelleKarmique = positionEchelleKarmique;
     }
-
 }

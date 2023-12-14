@@ -1,10 +1,20 @@
 import java.util.Scanner;
 
+/**
+ * Classe utilitaire contenant des méthodes pour faciliter l'affichage en
+ * console
+ * et la gestion des entrées utilisateur.
+ */
 public class Utils {
-    // on ajoute les fonctions réutilisables style input de texte qu'on évite qu'il
-    // y en ait partout et que pour le rendre plus beau dans la console on ait juste
-    // à modifier ici
-
+    /**
+     * Applique la couleur spécifiée au texte.
+     *
+     * @param text  Texte à formater.
+     * @param color Couleur à appliquer. Les couleurs supportées sont "gris",
+     *              "rouge", "orange", "bleu", "vert", "jaune",
+     *              "rose", "cyan" et "mosaique".
+     * @return Texte formaté avec la couleur spécifiée.
+     */
     public static String appliquerCouleur(String text, String color) {
         if (color == null) {
             color = "";
@@ -47,22 +57,46 @@ public class Utils {
         return color + text;
     }
 
-    // system.out.println, mais qui accepte une couleur en paramètre
+    /**
+     * Affiche le texte avec la couleur spécifiée suivi d'une réinitialisation de la
+     * couleur.
+     *
+     * @param text  Texte à afficher.
+     * @param color Couleur à appliquer.
+     */
     public static void println(String text, String color) {
         String coloredText = appliquerCouleur(text, color);
         System.out.println(coloredText + "\u001B[0m");
     }
 
+    /**
+     * Affiche un texte important avec une couleur spécifiée.
+     *
+     * @param text  Texte important à afficher.
+     * @param color Couleur à appliquer.
+     */
     public static void printlnImportant(String text, String color) {
         Utils.println("--------------------------------------------------", "gris");
         Utils.println(text, color);
         Utils.println("--------------------------------------------------", "gris");
     }
 
+    /**
+     * Affiche une ligne de séparation.
+     */
     public static void printLigne() {
         Utils.println("--------------------------------------------------", "gris");
     }
 
+    /**
+     * Récupère un entier à partir de l'entrée utilisateur.
+     *
+     * @param text        Texte à afficher avant de récupérer l'entrée.
+     * @param color       Couleur à appliquer au texte.
+     * @param enJeu       Indique si la méthode est utilisée en jeu.
+     * @param nombreChoix Nombre de choix disponibles.
+     * @return L'entier saisi par l'utilisateur.
+     */
     public static int inputInt(String text, String color, boolean enJeu, int nombreChoix) {
         Scanner sc = new Scanner(System.in);
         Utils.println(text, color);
@@ -78,11 +112,11 @@ public class Utils {
         boolean choixValide = false;
         int input = 0;
 
-//        while (!sc.hasNextInt()) {
-//            Utils.println("Veuillez entrer un entier valide.", "rouge");
-//            sc.next(); // consommer l'entrée invalide
-//            Utils.println(text, color);
-//        }
+        // while (!sc.hasNextInt()) {
+        // Utils.println("Veuillez entrer un entier valide.", "rouge");
+        // sc.next(); // consommer l'entrée invalide
+        // Utils.println(text, color);
+        // }
 
         while (!choixValide) {
             try {
@@ -104,11 +138,17 @@ public class Utils {
         return input;
     }
 
+    /**
+     * Efface la console.
+     */
     public static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    /**
+     * Attend que l'utilisateur appuie sur Entrée.
+     */
     public static void waitEnter() {
         System.out.print("\n");
         Utils.println("Appuyez sur entrée...", "jaune");
@@ -119,7 +159,7 @@ public class Utils {
     public static String inputString(String text, String color) {
         // si c'est un bot qui joue, on fait un choix aléatoire entre o et n
         if (Partie.getInstance().getJoueurActuel() instanceof JoueurVirtuel) {
-            String[] choix = {"o", "n"};
+            String[] choix = { "o", "n" };
             String choixAleatoire = choix[(int) (Math.random() * 2)];
             Utils.println("[BOT] Choix du JoueurVirtuel : " + choixAleatoire, "rose");
             return choixAleatoire;
