@@ -43,12 +43,15 @@ public class Joueur {
         // on vide la pile de cartes jouées pour le pouvoir
         this.cartesJoueesPourPouvoir = new Pile();
 
-        // On propose au joueur de recuperer les cartes jouées par l'adversaire pour le pouvoir
+        // On propose au joueur de recuperer les cartes jouées par l'adversaire pour le
+        // pouvoir
         Pile cartesJoueesPourPouvoirAdverse = joueurAdverse.getCartesJoueesPourPouvoir();
         // on vérifie si c'est vide
         if (cartesJoueesPourPouvoirAdverse != null && cartesJoueesPourPouvoirAdverse.getNbCartes() > 0) {
             for (int i = 0; i < cartesJoueesPourPouvoirAdverse.getNbCartes(); i++) {
-                Utils.println("Voulez-vous récupérer " + cartesJoueesPourPouvoirAdverse.getCarte(i).getNom() + " ? (o/n)", "vert");
+                Utils.println(
+                        "Voulez-vous récupérer " + cartesJoueesPourPouvoirAdverse.getCarte(i).getNom() + " ? (o/n)",
+                        "vert");
                 String choixRecuperer = Utils.inputString("Choix : ", "jaune");
                 // si o on ajoute la carte à la main du joueur adverse
                 // si n on jette la carte dans la fosse
@@ -60,7 +63,9 @@ public class Joueur {
                         choixValide = true;
                     } else if (choixRecuperer.equals("n")) {
                         partie.getPlateau().getLaFosse().ajouterCarte(cartesJoueesPourPouvoirAdverse.getCarte(i));
-                        Utils.println("Vous jetez " + cartesJoueesPourPouvoirAdverse.getCarte(i).getNom() + " dans la fosse", "gris");
+                        Utils.println(
+                                "Vous jetez " + cartesJoueesPourPouvoirAdverse.getCarte(i).getNom() + " dans la fosse",
+                                "gris");
                         choixValide = true;
                     } else {
                         Utils.println("Erreur : choix invalide", "rouge");
@@ -112,76 +117,96 @@ public class Joueur {
                 joueurAdverse.debutTour(partie);
             }
         } else if (choix == 2) {
-            // on joue une carte de la main pour ses points
-            Utils.clearConsole();
-            Utils.println("Quelle carte souhaitez-vous jouer pour ses points :", "orange");
-            Pile.cartesToString(this.getMain(), true, true);
-            System.out.print("\n");
-            int choixCarte = Utils.inputInt("Choix : ", "jaune", true, this.getMain().getNbCartes());
-            if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
-                Utils.println("Erreur : choix invalide", "rouge");
+            if (this.getMain().getNbCartes() == 0) {
+                Utils.println("Votre main est vide", "rouge");
                 Utils.waitEnter();
                 this.debutTour(partie);
             } else {
-                Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
-                this.getOeuvres().ajouterCarte(carteChoisie);
-                this.getMain().supprimerCarte(choixCarte - 1);
-                Utils.println("Vous jouez " + carteChoisie.getNom() + " pour ses points", "gris");
-                Utils.waitEnter();
-                partie.setJoueurActuel(joueurAdverse);
-                joueurAdverse.debutTour(partie);
+                // on joue une carte de la main pour ses points
+                Utils.clearConsole();
+                Utils.println("Quelle carte souhaitez-vous jouer pour ses points :", "orange");
+                Pile.cartesToString(this.getMain(), true, true);
+                System.out.print("\n");
+                int choixCarte = Utils.inputInt("Choix : ", "jaune", true, this.getMain().getNbCartes());
+                if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
+                    Utils.println("Erreur : choix invalide", "rouge");
+                    Utils.waitEnter();
+                    this.debutTour(partie);
+                } else {
+                    Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
+                    this.getOeuvres().ajouterCarte(carteChoisie);
+                    this.getMain().supprimerCarte(choixCarte - 1);
+                    Utils.println("Vous jouez " + carteChoisie.getNom() + " pour ses points", "gris");
+                    Utils.waitEnter();
+                    partie.setJoueurActuel(joueurAdverse);
+                    joueurAdverse.debutTour(partie);
+                }
             }
         } else if (choix == 3) {
-            // on joue une carte de la main pour son pouvoir
-            Utils.clearConsole();
-            Utils.println("Quelle carte souhaitez-vous jouer pour son pouvoir :", "orange");
-            Pile.cartesToString(this.getMain(), true, true);
-            System.out.print("\n");
-            int choixCarte = Utils.inputInt("Choix : ", "jaune", true, this.getMain().getNbCartes());
-            if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
-                Utils.println("Erreur : choix invalide", "rouge");
+            if (this.getMain().getNbCartes() == 0) {
+                Utils.println("Votre main est vide", "rouge");
                 Utils.waitEnter();
                 this.debutTour(partie);
             } else {
-                Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
-                carteChoisie.utiliserPouvoir();
+                // on joue une carte de la main pour son pouvoir
+                Utils.clearConsole();
+                Utils.println("Quelle carte souhaitez-vous jouer pour son pouvoir :", "orange");
+                Pile.cartesToString(this.getMain(), true, true);
+                System.out.print("\n");
+                int choixCarte = Utils.inputInt("Choix : ", "jaune", true, this.getMain().getNbCartes());
+                if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
+                    Utils.println("Erreur : choix invalide", "rouge");
+                    Utils.waitEnter();
+                    this.debutTour(partie);
+                } else {
+                    Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
+                    carteChoisie.utiliserPouvoir();
 
-                for (int i = 0; i < this.getCartesJoueesPourPouvoir().getNbCartes(); i++) {
-                    Utils.println("Vous avez joué " + this.getCartesJoueesPourPouvoir().getCarte(i).getNom() + " pour son pouvoir", "gris");
-                }
-                for (int i = 0; i < this.getCartesJoueesPourPouvoir().getNbCartes(); i++) {
-                    Carte carte = this.getCartesJoueesPourPouvoir().getCarte(i);
-                    int index = this.getMain().getCarteIndex(carte);
-                    try {
-                        this.getMain().supprimerCarte(index);
-                        Utils.println("Vous défaussez " + this.getCartesJoueesPourPouvoir().getCarte(i).getNom(), "gris");
-                    } catch (Exception e) {
-                        Utils.println("La carte " + carte.getNom() + " à déjà été sortie de votre main", "rouge");
+                    for (int i = 0; i < this.getCartesJoueesPourPouvoir().getNbCartes(); i++) {
+                        Utils.println("Vous avez joué " + this.getCartesJoueesPourPouvoir().getCarte(i).getNom()
+                                + " pour son pouvoir", "gris");
                     }
+                    for (int i = 0; i < this.getCartesJoueesPourPouvoir().getNbCartes(); i++) {
+                        Carte carte = this.getCartesJoueesPourPouvoir().getCarte(i);
+                        int index = this.getMain().getCarteIndex(carte);
+                        try {
+                            this.getMain().supprimerCarte(index);
+                            Utils.println("Vous défaussez " + this.getCartesJoueesPourPouvoir().getCarte(i).getNom(),
+                                    "gris");
+                        } catch (Exception e) {
+                            Utils.println("La carte " + carte.getNom() + " à déjà été sortie de votre main", "rouge");
+                        }
+                    }
+                    Utils.waitEnter();
+                    partie.setJoueurActuel(joueurAdverse);
+                    joueurAdverse.debutTour(partie);
                 }
-                Utils.waitEnter();
-                partie.setJoueurActuel(joueurAdverse);
-                joueurAdverse.debutTour(partie);
             }
 
         } else if (choix == 4) {
-            Utils.clearConsole();
-            Utils.println("Quelle carte souhaitez-vous jouer pour votre futur :", "orange");
-            Pile.cartesToString(this.getMain(), true, true);
-            System.out.print("\n");
-            int choixCarte = Utils.inputInt("Choix : ", "jaune", true, this.getMain().getNbCartes());
-            if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
-                Utils.println("Erreur : choix invalide", "rouge");
+            if (this.getMain().getNbCartes() == 0) {
+                Utils.println("Votre main est vide", "rouge");
                 Utils.waitEnter();
                 this.debutTour(partie);
             } else {
-                Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
-                this.getVieFuture().ajouterCarte(carteChoisie);
-                this.getMain().supprimerCarte(choixCarte - 1);
-                Utils.println("Vous jouez " + carteChoisie.getNom() + " pour votre futur", "gris");
-                Utils.waitEnter();
-                partie.setJoueurActuel(joueurAdverse);
-                joueurAdverse.debutTour(partie);
+                Utils.clearConsole();
+                Utils.println("Quelle carte souhaitez-vous jouer pour votre futur :", "orange");
+                Pile.cartesToString(this.getMain(), true, true);
+                System.out.print("\n");
+                int choixCarte = Utils.inputInt("Choix : ", "jaune", true, this.getMain().getNbCartes());
+                if (choixCarte > this.getMain().getNbCartes() || choixCarte <= 0) {
+                    Utils.println("Erreur : choix invalide", "rouge");
+                    Utils.waitEnter();
+                    this.debutTour(partie);
+                } else {
+                    Carte carteChoisie = this.getMain().getCarte(choixCarte - 1);
+                    this.getVieFuture().ajouterCarte(carteChoisie);
+                    this.getMain().supprimerCarte(choixCarte - 1);
+                    Utils.println("Vous jouez " + carteChoisie.getNom() + " pour votre futur", "gris");
+                    Utils.waitEnter();
+                    partie.setJoueurActuel(joueurAdverse);
+                    joueurAdverse.debutTour(partie);
+                }
             }
         } else if (choix == 5) {
             Utils.println("Vous passez votre tour", "gris");
