@@ -30,13 +30,13 @@ public class Deni extends Carte {
         Utils.println("Voici votre main :", "vert");
         Pile.cartesToString(cartesSansDeni, true, true);
         // on demande au joueur quelle carte il veut défausser parmi sa main - la carte deni
-        Utils.println("Quelle carte voulez-vous défausser ? (1-" + (main.getNbCartes() - 1) + ")", "vert");
+        Utils.println("Quelle carte voulez-vous défausser ? (1-" + (cartesSansDeni.getNbCartes()) + ")", "vert");
         // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
         int choixCarte = 0;
         boolean carteValide = false;
         while (!carteValide) {
             try {
-                choixCarte = Utils.inputInt("Choix : ", "jaune", true, main.getNbCartes() - 1);
+                choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesSansDeni.getNbCartes());
                 // on récupère la carte choisie
                 Carte carteChoisie = main.getCarte(choixCarte - 1);
                 main.defausserCarte(carteChoisie);

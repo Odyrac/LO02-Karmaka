@@ -26,7 +26,11 @@ public class Duperie extends Carte{
         Utils.println("Voici les 3 premières cartes de la main de " + joueurAdverse.getPseudo() + " :", "vert");
         Pile cartesMainAdverse = new Pile();
         for (int i = 0; i < 3; i++) {
-            cartesMainAdverse.ajouterCarte(mainAdverse.getCarte(i));
+            try {
+                cartesMainAdverse.ajouterCarte(mainAdverse.getCarte(i));
+            } catch (Exception e) {
+                Utils.println("Erreur : la main de " + joueurAdverse.getPseudo() + " est vide", "rouge");
+            }
         }
         Pile.cartesToString(cartesMainAdverse, true, true);
         // on demande au joueur quelle carte il veut ajouter à sa main

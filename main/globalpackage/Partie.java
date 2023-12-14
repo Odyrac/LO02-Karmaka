@@ -99,6 +99,7 @@ public class Partie implements Serializable {
             // création de LaSource
             Pile source = new Pile();
 
+
             // Ajout des cartes pour Bassesse
             for (int i = 0; i < Bassesse.NB_CARTES; i++) {
                 source.ajouterCarte(new Bassesse());

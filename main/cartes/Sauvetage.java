@@ -31,12 +31,14 @@ public class Sauvetage extends Carte{
                 Utils.println("Erreur : la fosse est vide", "rouge");
             }
         }
-        // on affiche les 3 dernières cartes de la fosse
-        Utils.println("Voici les 3 dernières cartes de la fosse :", "vert");
-        Pile.cartesToString(cartesFosse, true, true);
-        // on demande au joueur d'en choisir une dans le range des cartes de la fosse
-        boolean choixValide = false;
-        while (!choixValide) {
+        if(cartesFosse.getNbCartes() == 0){
+            Utils.println("La fosse est vide", "rouge");
+        }
+        else{
+            // on affiche les 3 dernières cartes de la fosse
+            Utils.println("Voici les 3 dernières cartes de la fosse :", "vert");
+            Pile.cartesToString(cartesFosse, true, true);
+            // on demande au joueur d'en choisir une dans le range des cartes de la fosse
             Utils.println("Quelle carte voulez-vous ajouter à votre main ? (1-" + cartesFosse.getNbCartes() + ")", "vert");
             // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
             int choixCarte = 0;
@@ -46,13 +48,12 @@ public class Sauvetage extends Carte{
                     choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesFosse.getNbCartes());
                     // on récupère la carte choisie
                     Carte carteChoisie = cartesFosse.getCarte(choixCarte - 1);
-                    // on l'ajoute à la main du joueur actuel
+                    // on l'ajoute à la main
                     main.ajouterCarte(carteChoisie);
+                    // on la retire de la fosse
+                    fosse.supprimerCarte(fosse.getCarteIndex(carteChoisie));
                     // on affiche un message
                     Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre main", "vert");
-                    // on supprime la carte de la fosse
-                    int index = fosse.getCarteIndex(carteChoisie);
-                    fosse.supprimerCarte(index);
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");

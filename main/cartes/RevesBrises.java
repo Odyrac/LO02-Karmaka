@@ -20,14 +20,18 @@ public class RevesBrises extends Carte {
         // on récupère le joueur cible (on a toujours 2 joueurs donc c'est forcément l'autre)
         Joueur joueurAdverse = Partie.getInstance().getJoueurAdverse(joueurActuel);
         // on récupère la carte de la vie future
-        Carte carte = joueurAdverse.getVieFuture().getCarte(0);
-        // on l'ajoute à sa vie future
-        Pile vieFuture = joueurActuel.getVieFuture();
-        vieFuture.ajouterCarte(carte);
-        // on la retire de la vie future
-        int index = joueurAdverse.getVieFuture().getCarteIndex(carte);
-        joueurAdverse.getVieFuture().supprimerCarte(index);
-        // on affiche un message
-        Utils.println("Vous avez placé la première carte de la vie future de " + joueurAdverse.getPseudo() + " sur votre vie future", "vert");
+        try{
+            Carte carte = joueurAdverse.getVieFuture().getCarte(0);
+            // on l'ajoute à sa vie future
+            Pile vieFuture = joueurActuel.getVieFuture();
+            vieFuture.ajouterCarte(carte);
+            // on la retire de la vie future
+            int index = joueurAdverse.getVieFuture().getCarteIndex(carte);
+            joueurAdverse.getVieFuture().supprimerCarte(index);
+            // on affiche un message
+            Utils.println("Vous avez placé la première carte de la vie future de " + joueurAdverse.getPseudo() + " sur votre vie future", "vert");
+        } catch (Exception e) {
+            Utils.println("Erreur : la vie future de " + joueurAdverse.getPseudo() + " est vide", "rouge");
+        }
     }
 }
