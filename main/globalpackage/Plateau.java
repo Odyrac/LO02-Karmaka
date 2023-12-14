@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 /**
  * La classe Plateau représente le plateau de jeu.
  * Elle contient la source, la fosse et les joueurs.
  */
-public class Plateau {
+public class Plateau implements Serializable {
     /**
      * La pile représentant la source du jeu.
      */

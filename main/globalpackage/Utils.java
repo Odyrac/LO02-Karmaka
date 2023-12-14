@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.*;
 
 /**
  * Classe utilitaire contenant des méthodes pour faciliter l'affichage en
@@ -277,6 +279,58 @@ public class Utils {
                 Utils.concatenerPaquets(Utils.construirePaquet("Vie Future", nombreDeCartesVieFuture, "gris", ""),
                         Utils.construirePaquet("Pile", nombreDeCartesPile, "gris", "")));
 
+    }
+
+    public static ArrayList<Partie> chargerParties() {
+        ArrayList<Partie> parties = new ArrayList<>();
+
+        // Vérifiez si le fichier existe, sinon, créez-le
+        File file = new File("parties.ser");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.err.println("Erreur lors de la création du fichier : " + e.getMessage());
+            }
+        }
+
+        // Utilisez un try-with-resources pour assurer la fermeture du flux
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            // La méthode readObject() renvoie un Object, donc nous devons le convertir en
+            // ArrayList<Partie>
+            Object obj = ois.readObject();
+
+            if (obj instanceof ArrayList<?>) {
+                @SuppressWarnings("unchecked")
+                ArrayList<Partie> partiesChargees = (ArrayList<Partie>) obj;
+                parties.addAll(partiesChargees);
+                System.out.println("Parties chargées avec succès.");
+            } else {
+                System.err.println("Le fichier ne contient pas une liste de parties.");
+            }
+        } catch (EOFException e) {
+            // Cette exception peut être ignorée, car elle indique simplement la fin du fichier
+            System.out.println("Fin du fichier atteinte.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement des parties : " + e.getMessage());
+        }
+
+        return parties;
+    }
+
+    public static void sauvegarderParties(ArrayList<Partie> parties, String cheminFichier) throws IOException {
+        // Nous utilisons un try-with-resources pour nous assurer que le fichier sera
+        // fermé à la fin du bloc try
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(cheminFichier))) {
+            oos.writeObject(parties);
+            System.out.println("Parties sauvegardées avec succès.");
+        }
+    }
+
+    public static String timestampToDate(int timestamp) {
+        return new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date(timestamp * 1000L));
     }
 
 }

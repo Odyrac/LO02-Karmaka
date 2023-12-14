@@ -1,10 +1,16 @@
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.io.IOException;
+
+
 /**
  * La classe Partie gère le déroulement d'une partie du jeu.
  * Elle implémente le modèle Singleton.
  */
-public class Partie {
+public class Partie implements Serializable {
     private Joueur joueurActuel;
     private Plateau plateau;
+    private int timestamp;
 
     // Instance unique de la classe Partie
     private static Partie instance;
@@ -82,6 +88,8 @@ public class Partie {
             joueurs[0] = joueur1;
             joueurs[1] = joueur2;
             plateau.setJoueurs(joueurs);
+
+            partie.setTimestamp((int) (System.currentTimeMillis() / 1000L));
 
             partie.setPlateau(plateau);
 
@@ -224,6 +232,8 @@ public class Partie {
             }
 
             partie.getJoueurActuel().debutTour(partie);
+        } else {
+            partie.getJoueurActuel().debutTour(partie);
         }
     }
 
@@ -276,6 +286,41 @@ public class Partie {
         return joueurActuel;
     }
 
+    public void sauvegarderPartie() {
+
+        ArrayList<Partie> parties = Utils.chargerParties();
+
+        boolean partieExiste = false;
+        for (int i = 0; i < parties.size(); i++) {
+            if (parties.get(i).getTimestamp() == this.getTimestamp()) {
+                parties.set(i, this);
+                partieExiste = true;
+            }
+        }
+
+        if (!partieExiste) {
+            Utils.printlnImportant("ATTENTION CREATION DUNE SAUV", "rouge");
+            parties.add(this);
+        }
+
+        try {
+            Utils.sauvegarderParties(parties, "parties.ser");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors de la sauvegarde de la partie : " + e.getMessage());
+        }
+    }
+
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public int getTimestamp() {
+        return timestamp;
+    }
+
+    
+
     /**
      * Obtient le joueur adverse d'un joueur donné.
      * 
@@ -289,5 +334,14 @@ public class Partie {
         } else {
             return joueurs[0];
         }
+    }
+
+
+    public String toString() {
+        String str = "";
+        str += "Joueur actuel : " + this.getJoueurActuel().getPseudo() + "\n";
+        str += "Joueur adverse : " + this.getJoueurAdverse(this.getJoueurActuel()).getPseudo() + "\n";
+        str += "Date : " + Utils.timestampToDate(this.getTimestamp()) + "\n";
+        return str;
     }
 }

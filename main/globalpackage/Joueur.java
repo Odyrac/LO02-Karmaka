@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /**
  * La classe Joueur représente un joueur dans le jeu.
  */
-public class Joueur {
+public class Joueur implements Serializable {
 
     /** La pile de cartes en main du joueur. */
     protected Pile main;
@@ -55,6 +57,8 @@ public class Joueur {
      */
     public void debutTour(Partie partie) {
         Utils.clearConsole();
+
+        partie.sauvegarderPartie();
 
         Joueur joueurAdverse = partie.getJoueurAdverse(this);
         Utils.printLigne();

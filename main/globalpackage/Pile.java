@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 /**
  * La classe Pile représente une pile de cartes.
  * Elle est utilisée pour la main, la pile et la fosse des joueurs.
  */
-public class Pile {
+public class Pile implements Serializable {
 
     /**
      * Tableau de cartes représentant la pile.

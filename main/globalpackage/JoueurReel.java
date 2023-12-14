@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /**
  * Cette classe représente un joueur réel dans le jeu.
  */
-public class JoueurReel extends Joueur {
+public class JoueurReel extends Joueur implements Serializable {
 
     /**
      * Constructeur de la classe JoueurReel.
@@ -10,5 +12,9 @@ public class JoueurReel extends Joueur {
     public JoueurReel(String pseudo) {
         // Initialise le joueur en utilisant la méthode de la classe parente
         initialiserJoueur(pseudo);
+    }
+
+    public String toString() {
+        return "Joueur réel : " + pseudo;
     }
 }

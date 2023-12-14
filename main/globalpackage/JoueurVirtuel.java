@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /**
  * Cette classe représente un joueur virtuel dans le jeu.
  */
-public class JoueurVirtuel extends Joueur {
+public class JoueurVirtuel extends Joueur implements Serializable {
 
     /**
      * Constructeur de la classe JoueurVirtuel.

@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 /**
  * La classe Carte représente une carte générique avec des attributs tels que le nom, la description, les points,
  * la couleur et le nombre total de cartes.
  */
-public class Carte {
+public class Carte implements Serializable {
 
     /** Le nom de la carte. */
     protected String nom;
