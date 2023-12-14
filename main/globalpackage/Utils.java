@@ -128,7 +128,7 @@ public class Utils {
                     Utils.println(text, color);
                 }
                 input = sc.nextInt();
-                if (input >= 1 && input <= nombreChoix) {
+                if (input >= 0 && input <= nombreChoix) {
                     choixValide = true;
                 } else {
                     throw new Exception();
