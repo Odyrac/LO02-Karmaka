@@ -325,7 +325,26 @@ public class Joueur implements Serializable {
      * @param partie            La partie en cours.
      */
     public void reincarnationActions(EnumEchelleKarmique prochainePosition, Partie partie) {
-        // ... (le contenu de la méthode a été précédemment commenté)
+        this.setPositionEchelleKarmique(prochainePosition);
+        // on défausse les œuvres dans la fosse
+        for (int i = 0; i < this.getOeuvres().getNbCartes(); i++) {
+            partie.getPlateau().getLaFosse().ajouterCarte(this.getOeuvres().piocherCarte());
+        }
+
+        // on prend toutes les cartes de notre vie future comme nouvelle main
+        for (int i = 0; i < this.getVieFuture().getNbCartes(); i++) {
+            this.getMain().ajouterCarte(this.getVieFuture().piocherCarte());
+        }
+
+        // on constitue la nouvelle pile
+        if (this.getMain().getNbCartes() < 6) {
+            while (this.getMain().getNbCartes() + this.getPile().getNbCartes() <= 6) {
+                this.getPile().ajouterCarte(partie.getPlateau().getLaSource().piocherCarte());
+            }
+        }
+
+        partie.setJoueurActuel(partie.getJoueurAdverse(this));
+        partie.getJoueurActuel().debutTour(partie);
     }
 
     /**
