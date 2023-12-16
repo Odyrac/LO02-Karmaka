@@ -215,6 +215,7 @@ public class Partie implements Serializable {
                 source.ajouterCarte(new Destinee());
             }
 
+
             source.melangerCartes();
             plateau.setLaSource(source);
 

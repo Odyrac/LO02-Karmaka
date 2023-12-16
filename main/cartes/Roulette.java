@@ -30,29 +30,38 @@ public class Roulette extends Carte{
                     Utils.println("Erreur : choix invalide", "rouge");
                 }
             }
+            // on cree une pile cartessansroulette pour ne pas pouvoir placer la carte roulette sur la vie future
+            Pile cartesSansRoulette = new Pile();
+            for (int i = 0; i < main.getNbCartes(); i++) {
+                if (main.getCarte(i) != this) {
+                    cartesSansRoulette.ajouterCarte(main.getCarte(i));
+                }
+            }
             // on défausse les cartes
             for (int i = 0; i < choixNbCarte; i++) {
-                // on affiche la main du joueur
-                Utils.println("Voici votre main :", "vert");
-                Pile.cartesToString(main, true, true);
-                // on demande au joueur quelle carte il veut défausser
-                Utils.println("Quelle carte voulez-vous défausser ? (1-" + main.getNbCartes() + ")", "vert");
-                // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
-                int choixCarte = 0;
-                carteValide = false;
-                while (!carteValide) {
-                    try {
-                        choixCarte = Utils.inputInt("Choix : ", "jaune", true, main.getNbCartes());
-                        // on récupère la carte choisie
-                        Carte carteChoisie = main.getCarte(choixCarte - 1);
-                        // on la défausse
-                        main.defausserCarte(carteChoisie);
-                        // on affiche un message
-                        Utils.println("Vous avez défaussé la carte " + carteChoisie.getNom(), "vert");
-                        carteValide = true;
-                    } catch (Exception e) {
-                        Utils.println("Erreur : choix invalide", "rouge");
+                if (cartesSansRoulette.getNbCartes() > 0) {
+                    Pile.cartesToString(cartesSansRoulette, true, true);
+                    // on demande au joueur quelle carte il veut défausser
+                    Utils.println("Quelle carte voulez-vous défausser ? (1-" + cartesSansRoulette.getNbCartes() + ")", "vert");
+                    // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
+                    int choixCarte = 0;
+                    carteValide = false;
+                    while (!carteValide) {
+                        try {
+                            choixCarte = Utils.inputInt("Choix : ", "jaune", true, main.getNbCartes());
+                            // on récupère la carte choisie
+                            Carte carteChoisie = main.getCarte(choixCarte - 1);
+                            // on la défausse
+                            main.defausserCarte(carteChoisie);
+                            // on affiche un message
+                            Utils.println("Vous avez défaussé la carte " + carteChoisie.getNom(), "vert");
+                            carteValide = true;
+                        } catch (Exception e) {
+                            Utils.println("Erreur : choix invalide", "rouge");
+                        }
                     }
+                }else{
+                    Utils.println("Vous n'avez pas de carte à défausser", "rouge");
                 }
             }
             // on affiche la main du joueur
@@ -72,12 +81,16 @@ public class Roulette extends Carte{
             }
             // on pioche les cartes
             for (int i = 0; i < choixNbCarte + 1; i++) {
-                // on récupère la carte piochée
-                Carte cartePiochee = Partie.getInstance().getPlateau().getLaSource().piocherCarte();
-                // on l'ajoute à la main du joueur
-                main.ajouterCarte(cartePiochee);
-                // on affiche un message
-                Utils.println("Vous avez pioché la carte " + cartePiochee.getNom(), "vert");
+                try {
+                    // on récupère la carte piochée
+                    Carte cartePiochee = Partie.getInstance().getPlateau().getLaSource().piocherCarte();
+                    // on l'ajoute à la main du joueur
+                    main.ajouterCarte(cartePiochee);
+                    // on affiche un message
+                    Utils.println("Vous avez pioché la carte " + cartePiochee.getNom(), "vert");
+                } catch (Exception e) {
+                    Utils.println("Erreur : la source est vide", "rouge");
+                }
             }
             // on affiche la main du joueur
             Utils.println("Voici votre main :", "vert");

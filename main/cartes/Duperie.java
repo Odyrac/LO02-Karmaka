@@ -32,26 +32,31 @@ public class Duperie extends Carte{
                 Utils.println("Erreur : la main de " + joueurAdverse.getPseudo() + " est vide", "rouge");
             }
         }
-        Pile.cartesToString(cartesMainAdverse, true, true);
-        // on demande au joueur quelle carte il veut ajouter à sa main
-        Utils.println("sélectionnez la carte que vous voulez ajouter à votre main :", "vert");
-        // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
-        int choixCarte = 0;
-        boolean carteValide = false;
-        while (!carteValide) {
-            try {
-                choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesMainAdverse.getNbCartes());
-                // on récupère la carte choisie
-                Carte carteChoisie = cartesMainAdverse.getCarte(choixCarte - 1);
-                // on l'ajoute à la main du joueur actuel
-                main.ajouterCarte(carteChoisie);
-                // on la retire de la main du joueur adverse
-                mainAdverse.supprimerCarte(mainAdverse.getCarteIndex(carteChoisie));
-                // on affiche un message
-                Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre main", "vert");
-                carteValide = true;
-            } catch (Exception e) {
-                Utils.println("Erreur : choix invalide", "rouge");
+        if(cartesMainAdverse.getNbCartes() == 0 ){
+            Utils.println("La main de " + joueurAdverse.getPseudo() + " est vide", "rouge");
+        }
+        else{
+            Pile.cartesToString(cartesMainAdverse, true, true);
+            // on demande au joueur quelle carte il veut ajouter à sa main
+            Utils.println("sélectionnez la carte que vous voulez ajouter à votre main :", "vert");
+            // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
+            int choixCarte = 0;
+            boolean carteValide = false;
+            while (!carteValide) {
+                try {
+                    choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesMainAdverse.getNbCartes());
+                    // on récupère la carte choisie
+                    Carte carteChoisie = cartesMainAdverse.getCarte(choixCarte - 1);
+                    // on l'ajoute à la main du joueur actuel
+                    main.ajouterCarte(carteChoisie);
+                    // on la retire de la main du joueur adverse
+                    mainAdverse.supprimerCarte(mainAdverse.getCarteIndex(carteChoisie));
+                    // on affiche un message
+                    Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre main", "vert");
+                    carteValide = true;
+                } catch (Exception e) {
+                    Utils.println("Erreur : choix invalide", "rouge");
+                }
             }
         }
     }
