@@ -337,7 +337,7 @@ public class Joueur implements Serializable {
         }
 
         // on constitue la nouvelle pile
-        if (this.getMain().getNbCartes() < 6) {
+        if (this.getMain().getNbCartes() < 6 && partie.getPlateau().getLaSource().getNbCartes() >= 6) {
             while (this.getMain().getNbCartes() + this.getPile().getNbCartes() <= 6) {
                 this.getPile().ajouterCarte(partie.getPlateau().getLaSource().piocherCarte());
             }

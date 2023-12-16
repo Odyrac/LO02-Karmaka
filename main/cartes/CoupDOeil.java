@@ -39,22 +39,26 @@ public class CoupDOeil extends Carte {
                     cartesSansCoupDOeil.ajouterCarte(joueurActuel.getMain().getCarte(i));
                 }
             }
-            Pile.cartesToString(cartesSansCoupDOeil, true, true);
-            // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
-            int choixCarte = 0;
-            boolean carteValide = false;
-            Carte carteChoisie;
-            while (!carteValide) {
-                try {
-                    choixCarte = Utils.inputInt("Choix : ", "jaune", true, joueurActuel.getMain().getNbCartes() - 1);
-                    // on récupère la carte choisie
-                    carteChoisie = cartesSansCoupDOeil.getCarte(choixCarte - 1);
-                    // on la joue
-                    carteChoisie.utiliserPouvoir();
-                    carteValide = true;
-                } catch (Exception e) {
-                    Utils.println("Erreur : choix invalide", "rouge");
+            if (cartesSansCoupDOeil.getNbCartes() > 0) {
+                Pile.cartesToString(cartesSansCoupDOeil, true, true);
+                // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
+                int choixCarte = 0;
+                boolean carteValide = false;
+                Carte carteChoisie;
+                while (!carteValide) {
+                    try {
+                        choixCarte = Utils.inputInt("Choix : ", "jaune", true, joueurActuel.getMain().getNbCartes() - 1);
+                        // on récupère la carte choisie
+                        carteChoisie = cartesSansCoupDOeil.getCarte(choixCarte - 1);
+                        // on la joue
+                        carteChoisie.utiliserPouvoir();
+                        carteValide = true;
+                    } catch (Exception e) {
+                        Utils.println("Erreur : choix invalide", "rouge");
+                    }
                 }
+            }else{
+                Utils.println("Vous n'avez pas de carte à jouer", "rouge");
             }
         }
     }

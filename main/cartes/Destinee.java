@@ -22,7 +22,11 @@ public class Destinee extends Carte {
         Utils.println("Voici les 3 premières cartes de la source :", "vert");
         Pile cartesSource = new Pile();
         for (int i = 0; i < 3; i++) {
-            cartesSource.ajouterCarte(source.getCarte(i));
+            try {
+                cartesSource.ajouterCarte(source.getCarte(i));
+            } catch (Exception e) {
+                Utils.println("Erreur : la source est vide", "rouge");
+            }
         }
         // on demande au joueur quelles cartes il veut ajouter à sa vie future (0 pour sortir)
         Utils.println("sélectionnez les cartes que vous voulez ajouter à votre vie future (0 pour sortir) :", "vert");

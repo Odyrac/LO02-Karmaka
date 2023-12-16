@@ -24,10 +24,14 @@ public class Bassesse extends Carte{
             }
             // on défausse 2 cartes au hasard
             for (int i = 0; i < 2; i++) {
-                // on récupère une carte au hasard
-                Carte carte = mainAdverse.getCarteAleatoire();
-                // on la défausse
-                mainAdverse.defausserCarte(carte);
+                try{
+                    // on récupère une carte au hasard
+                    Carte carte = mainAdverse.getCarteAleatoire();
+                    // on la défausse
+                    mainAdverse.defausserCarte(carte);
+                }catch(Exception e){
+                    Utils.println("Erreur : la main de " + joueurAdverse.getPseudo() + " est vide", "rouge");
+                }
             }
             // on affiche un message
             Utils.println("Vous avez défaussé 2 cartes au hasard de la main de " + joueurAdverse.getPseudo(), "vert");

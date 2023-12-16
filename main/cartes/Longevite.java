@@ -24,10 +24,14 @@ public static final int NB_CARTES = 3;
         // on pioche 2 cartes à la source
         Pile source = Partie.getInstance().getPlateau().getLaSource();
         for (int i = 0; i < 2; i++) {
-            // on récupère la carte
-            Carte carte = source.piocherCarte();
-            // on l'ajoute à la pile
-            pile.ajouterCarte(carte);
+            try {
+                // on récupère la carte
+                Carte carte = source.piocherCarte();
+                // on l'ajoute à la pile
+                pile.ajouterCarte(carte);
+            } catch (Exception e) {
+                Utils.println("Erreur : la source est vide", "rouge");
+            }
         }
         // on affiche un message
         Utils.println("Vous avez placé 2 cartes de la source sur la pile de " + joueurAdverse.getPseudo(), "vert");

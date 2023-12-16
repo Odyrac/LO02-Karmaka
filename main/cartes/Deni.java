@@ -27,25 +27,38 @@ public class Deni extends Carte {
                 cartesSansDeni.ajouterCarte(main.getCarte(i));
             }
         }
-        Utils.println("Voici votre main :", "vert");
-        Pile.cartesToString(cartesSansDeni, true, true);
-        // on demande au joueur quelle carte il veut défausser parmi sa main - la carte deni
-        Utils.println("Quelle carte voulez-vous défausser ? (1-" + (cartesSansDeni.getNbCartes()) + ")", "vert");
-        // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
-        int choixCarte = 0;
-        boolean carteValide = false;
-        while (!carteValide) {
-            try {
-                choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesSansDeni.getNbCartes());
-                // on récupère la carte choisie
-                Carte carteChoisie = main.getCarte(choixCarte - 1);
-                main.defausserCarte(carteChoisie);
-                Utils.println("Vous avez défaussé la carte " + carteChoisie.getNom() + " de votre main", "vert");
-                // on utilise le pouvoir de la carte choisie
-                carteChoisie.utiliserPouvoir();
-                carteValide = true;
-            } catch (Exception e) {
-                Utils.println("Erreur : choix invalide", "rouge");
+        if(cartesSansDeni.getNbCartes() == 0 ){
+            Utils.println("Vous n'avez pas de carte à copier", "rouge");
+        }
+        else{
+            Utils.println("Voici votre main :", "vert");
+            Pile.cartesToString(cartesSansDeni, true, true);
+            // on demande au joueur quelle carte il veut défausser (on répète la question tant qu'il ne choisit pas une carte valide)
+            Utils.println("Quelle carte voulez-vous défausser ? (1-" + cartesSansDeni.getNbCartes() + ")", "vert");
+            // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
+            int choixCarte = 0;
+            boolean carteValide = false;
+            while (!carteValide) {
+                try {
+                    choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesSansDeni.getNbCartes());
+                    // on récupère la carte choisie
+                    Carte carteChoisie = cartesSansDeni.getCarte(choixCarte - 1);
+                    // on la défausse
+                    main.defausserCarte(carteChoisie);
+                    // on crée une instance temporaire de la carte choisie pour ne pas rajouter et on utilise son pouvoir
+                    Carte carteTemp = null;
+                    try {
+                        carteTemp = carteChoisie.getClass().getDeclaredConstructor().newInstance();
+                        carteTemp.utiliserPouvoir();
+                        // on supprime la carte temporaire
+                        carteTemp = null;
+                    } catch (Exception e) {
+                        Utils.println("Erreur : impossible de copier la carte", "rouge");
+                    }
+                    carteValide = true;
+                } catch (Exception e) {
+                    Utils.println("Erreur : choix invalide", "rouge");
+                }
             }
         }
     }
