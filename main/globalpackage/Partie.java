@@ -72,10 +72,10 @@ public class Partie implements Serializable {
                 System.out.print("\n");
                 pseudo = Utils.inputString("Entrez votre pseudo : ", "jaune");
                 joueur1 = new JoueurReel(pseudo);
-                joueur2 = new JoueurVirtuel();
+                joueur2 = Utils.setupJoueurVirtuel();
             } else if (choix == 3) {
-                joueur1 = new JoueurVirtuel();
-                joueur2 = new JoueurVirtuel();
+                joueur1 = Utils.setupJoueurVirtuel();
+                joueur2 = Utils.setupJoueurVirtuel();
             } else {
                 // on affiche un message d'erreur
                 Utils.clearConsole();

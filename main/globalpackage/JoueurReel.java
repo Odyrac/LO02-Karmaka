@@ -1,9 +1,7 @@
-import java.io.Serializable;
-
 /**
  * Cette classe représente un joueur réel dans le jeu.
  */
-public class JoueurReel extends Joueur implements Serializable {
+public class JoueurReel extends Joueur  {
 
     /**
      * Constructeur de la classe JoueurReel.

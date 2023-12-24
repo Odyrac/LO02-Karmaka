@@ -104,11 +104,9 @@ public class Utils {
         Utils.println(text, color);
 
         // si c'est un input de type enJeu et que joueur actuel est de type
-        // JoueurVirtuel alors on fait un choix aléatoire
+        // JoueurVirtuel alors on fait jouer automatiquement
         if (enJeu && Partie.getInstance().getJoueurActuel() instanceof JoueurVirtuel) {
-            int choix = (int) (Math.random() * nombreChoix) + 1;
-            Utils.println("[BOT] Choix du JoueurVirtuel : " + choix, "rose");
-            return choix;
+            return ((JoueurVirtuel) Partie.getInstance().getJoueurActuel()).jouer(nombreChoix);
         }
 
         boolean choixValide = false;
@@ -120,7 +118,10 @@ public class Utils {
         // Utils.println(text, color);
         // }
 
+     
+
         while (!choixValide) {
+         
             try {
                 while (!sc.hasNextInt()) {
                     Utils.println("Veuillez entrer un entier valide.", "rouge");
@@ -136,6 +137,7 @@ public class Utils {
             } catch (Exception e) {
                 Utils.println("Erreur : choix invalide", "rouge");
             }
+
         }
         return input;
     }
@@ -310,7 +312,8 @@ public class Utils {
                 System.err.println("Le fichier ne contient pas une liste de parties.");
             }
         } catch (EOFException e) {
-            // Cette exception peut être ignorée, car elle indique simplement la fin du fichier
+            // Cette exception peut être ignorée, car elle indique simplement la fin du
+            // fichier
             System.out.println("Fin du fichier atteinte.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -331,6 +334,31 @@ public class Utils {
 
     public static String timestampToDate(int timestamp) {
         return new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date(timestamp * 1000L));
+    }
+
+
+    public static JoueurVirtuel setupJoueurVirtuel() {
+        Utils.println("Le BOT doit jouer en mode ?", "vert");
+        Utils.println("1. Aléatoire", "vert");
+        Utils.println("2. Agressif", "vert");
+        Utils.println("3. Défensif", "vert");
+
+        System.out.print("\n");
+        int choix = Utils.inputInt("Choix : ", "jaune", false, 3);
+        String strategie = "";
+        switch (choix) {
+            case 1:
+                strategie = "aleatoire";
+                break;
+            case 2:
+                strategie = "agressif";
+                break;
+            case 3:
+                strategie = "defensif";
+                break;
+        }
+        JoueurVirtuel joueurVirtuel = new JoueurVirtuel(strategie);
+        return joueurVirtuel;
     }
 
 }
