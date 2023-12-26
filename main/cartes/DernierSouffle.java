@@ -22,7 +22,7 @@ public class DernierSouffle extends Carte{
         if (mainAdverse.getNbCartes() > 0 && mainAdverse != null) {
             //on passe le tour du joueur adverse
             Partie.getInstance().setJoueurActuel(joueurAdverse);
-            // on demande au joueur quelle carte il veut défausser parmi s
+            // on demande au joueur quelle carte il veut défausser parmi sa main
             Utils.println("Quelle carte voulez-vous défausser ? (1-" + mainAdverse.getNbCartes() + ")", "vert");
             // on affiche la main du joueur adverse
             Pile.cartesToString(mainAdverse, true, true);

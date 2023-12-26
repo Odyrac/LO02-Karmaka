@@ -27,7 +27,7 @@ public class Deni extends Carte {
                 cartesSansDeni.ajouterCarte(main.getCarte(i));
             }
         }
-        if(cartesSansDeni.getNbCartes() == 0 ){
+        if (cartesSansDeni.getNbCartes() <= 0) {
             Utils.println("Vous n'avez pas de carte à copier", "rouge");
         }
         else{

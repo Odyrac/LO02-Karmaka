@@ -32,11 +32,12 @@ public class Jubile extends Carte{
                 }
             }
             if (cartesSansJubile.getNbCartes() > 0) {
+                Utils.println("Quelle carte voulez-vous placer sur vos oeuvres ? (1-" + cartesSansJubile.getNbCartes() + ") (0 pour quitter)", "vert");
                 int choixCarte = 0;
                 boolean carteValide = false;
                 while (!carteValide) {
                     try {
-                        choixCarte = Utils.inputInt("Quelle carte voulez-vous placer sur vos oeuvres ? (1-" + cartesSansJubile.getNbCartes() + ") (0 pour quitter)", "jaune", true, cartesSansJubile.getNbCartes());
+                        choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesSansJubile.getNbCartes(), true);
                         // on récupère la carte choisie
                         Carte carteChoisie = cartesSansJubile.getCarte(choixCarte - 1);
                         if (choixCarte == 0) {

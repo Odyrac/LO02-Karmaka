@@ -24,7 +24,7 @@ public class Roulette extends Carte{
             boolean carteValide = false;
             while (!carteValide) {
                 try {
-                    choixNbCarte = Utils.inputInt("Choix : ", "jaune", true, 2);
+                    choixNbCarte = Utils.inputInt("Choix : ", "jaune", true, 2, true);
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
@@ -73,7 +73,7 @@ public class Roulette extends Carte{
             carteValide = false;
             while (!carteValide) {
                 try {
-                    choixNbCarte = Utils.inputInt("Choix : ", "jaune", true, choixNbCarte + 1);
+                    choixNbCarte = Utils.inputInt("Choix : ", "jaune", true, choixNbCarte + 1, true);
                     carteValide = true;
                 } catch (Exception e) {
                     Utils.println("Erreur : choix invalide", "rouge");
