@@ -1,6 +1,6 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.*;
 
 /**
  * Classe utilitaire contenant des méthodes pour faciliter l'affichage en
@@ -99,9 +99,10 @@ public class Utils {
      * @param nombreChoix Nombre de choix disponibles.
      * @return L'entier saisi par l'utilisateur.
      */
-    public static int inputInt(String text, String color, boolean enJeu, int nombreChoix) {
+    public static int inputInt(String text, String color, boolean enJeu, int nombreChoix, boolean allowZero) {
         Scanner sc = new Scanner(System.in);
         Utils.println(text, color);
+        int minVal = allowZero ? 0 : 1;
 
         // si c'est un input de type enJeu et que joueur actuel est de type
         // JoueurVirtuel alors on fait jouer automatiquement
@@ -129,7 +130,7 @@ public class Utils {
                     Utils.println(text, color);
                 }
                 input = sc.nextInt();
-                if (input >= 0 && input <= nombreChoix) {
+                if (input >= minVal && input <= nombreChoix) {
                     choixValide = true;
                 } else {
                     throw new Exception();
@@ -140,6 +141,10 @@ public class Utils {
 
         }
         return input;
+    }
+
+    public static int inputInt(String text, String color, boolean enJeu, int nombreChoix) {
+        return inputInt(text, color, enJeu, nombreChoix, false);
     }
 
     /**

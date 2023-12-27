@@ -36,32 +36,36 @@ public class Recyclage extends Carte{
                 Utils.println("Erreur : la fosse est vide", "rouge");
             }
         }
-        // on affiche les 3 dernières cartes de la fosse
-        Utils.println("Voici les 3 dernières cartes de la fosse :", "vert");
-        Pile.cartesToString(cartesFosse, true, true);
-        // on demande au joueur d'en choisir une dans le range des cartes de la fosse
-        boolean choixValide = false;
-        while (!choixValide) {
-            Utils.println("Quelle carte voulez-vous ajouter à votre vie future ? (1-" + cartesFosse.getNbCartes() + ")", "vert");
-            // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
-            int choixCarte = 0;
-            boolean carteValide = false;
-            Carte carteChoisie = null;
-            while (!carteValide) {
-                try {
-                    choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesFosse.getNbCartes());
-                    // on récupère la carte choisie
-                    carteChoisie = cartesFosse.getCarte(choixCarte - 1);
-                    carteValide = true;
-                } catch (Exception e) {
-                    Utils.println("Erreur : choix invalide", "rouge");
+        if (cartesFosse.getNbCartes() > 0) {
+            // on affiche les 3 dernières cartes de la fosse
+            Utils.println("Voici les 3 dernières cartes de la fosse :", "vert");
+            Pile.cartesToString(cartesFosse, true, true);
+            // on demande au joueur d'en choisir une dans le range des cartes de la fosse
+            boolean choixValide = false;
+            while (!choixValide) {
+                Utils.println("Quelle carte voulez-vous ajouter à votre vie future ? (1-" + cartesFosse.getNbCartes() + ")", "vert");
+                // on récupère le choix du joueur en repetant la question tant qu'il ne choisit pas une carte valide avec les exceptions
+                int choixCarte = 0;
+                boolean carteValide = false;
+                Carte carteChoisie = null;
+                while (!carteValide) {
+                    try {
+                        choixCarte = Utils.inputInt("Choix : ", "jaune", true, cartesFosse.getNbCartes());
+                        // on récupère la carte choisie
+                        carteChoisie = cartesFosse.getCarte(choixCarte - 1);
+                        carteValide = true;
+                    } catch (Exception e) {
+                        Utils.println("Erreur : choix invalide", "rouge");
+                    }
                 }
+                // on l'ajoute à la vie future du joueur actuel
+                vieFuture.ajouterCarte(carteChoisie);
+                // on affiche un message
+                Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre vie future", "vert");
+                choixValide = true;
             }
-            // on l'ajoute à la vie future du joueur actuel
-            vieFuture.ajouterCarte(carteChoisie);
-            // on affiche un message
-            Utils.println("Vous avez ajouté la carte " + carteChoisie.getNom() + " à votre vie future", "vert");
-            choixValide = true;
+        } else {
+            Utils.println("Il n'y a plus de cartes dans la fosse", "vert");
         }
     }
 }
