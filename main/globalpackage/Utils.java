@@ -97,6 +97,7 @@ public class Utils {
      * @param color       Couleur à appliquer au texte.
      * @param enJeu       Indique si la méthode est utilisée en jeu.
      * @param nombreChoix Nombre de choix disponibles.
+     * @param allowZero   Indique si l'entier 0 est autorisé.
      * @return L'entier saisi par l'utilisateur.
      */
     public static int inputInt(String text, String color, boolean enJeu, int nombreChoix, boolean allowZero) {
@@ -107,7 +108,7 @@ public class Utils {
         // si c'est un input de type enJeu et que joueur actuel est de type
         // JoueurVirtuel alors on fait jouer automatiquement
         if (enJeu && Partie.getInstance().getJoueurActuel() instanceof JoueurVirtuel) {
-            return ((JoueurVirtuel) Partie.getInstance().getJoueurActuel()).jouer(nombreChoix);
+            return ((JoueurVirtuel) Partie.getInstance().getJoueurActuel()).jouer(minVal, nombreChoix);
         }
 
         boolean choixValide = false;
@@ -140,6 +141,8 @@ public class Utils {
             }
 
         }
+
+  
         return input;
     }
 
@@ -162,8 +165,14 @@ public class Utils {
         System.out.print("\n");
         Utils.println("Appuyez sur entrée...", "jaune");
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+    
+        // Vérifier si une ligne est disponible avant de lire
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+    
     }
+    
 
     public static String inputString(String text, String color) {
         // si c'est un bot qui joue, on fait un choix aléatoire entre o et n

@@ -58,7 +58,12 @@ public class Joueur implements Serializable {
     public void debutTour(Partie partie) {
         Utils.clearConsole();
 
-        partie.sauvegarderPartie();
+        try {
+            partie.sauvegarderPartie();
+        } catch (Exception e) {
+            Utils.println("Erreur : impossible de sauvegarder la partie", "gris");
+            System.exit(0);
+        }
 
         Joueur joueurAdverse = partie.getJoueurAdverse(this);
         Utils.printLigne();
@@ -267,11 +272,19 @@ public class Joueur implements Serializable {
         // prochaine position echelle karmique, l'élement suivant de l'enum
         EnumEchelleKarmique prochainePosition = EnumEchelleKarmique.values()[this.getPositionEchelleKarmique().ordinal()
                 + 1];
-        Utils.println(" _ " + prochainePosition.toString() + " (" + enumKarmiquetoPoints(prochainePosition)
+        Utils.println(prochainePosition.toString() + " (" + enumKarmiquetoPoints(prochainePosition)
                 + " points nécessaires)", "vert");
-        Utils.println("/ \\", "vert");
-        Utils.println("| |", "vert");
-        Utils.println(this.getPositionEchelleKarmique().toString(), "vert");
+        Utils.println("     .", "vert");
+        Utils.println("   .:;:.", "vert");
+        Utils.println(" .:;;;;;:.", "vert");
+        Utils.println("   ;;;;;", "vert");
+        Utils.println("   ;;;;;", "vert");
+        Utils.println("   ;;;;;", "vert");
+        Utils.println("   ;;;;;", "vert");
+        Utils.println("   ;:;;;", "vert");
+        Utils.println("   : ;;;", "vert");
+        Utils.println("     ;:;", "vert");
+        Utils.println("  " + this.getPositionEchelleKarmique().toString(), "vert");
 
         // ceci représente le cas où le joueur avance d'une Echelle Karmique sans avoir
         // besoin d'utiliser ses Anneaux

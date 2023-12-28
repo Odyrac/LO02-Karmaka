@@ -301,7 +301,7 @@ public class Partie implements Serializable {
         }
 
         if (!partieExiste) {
-            Utils.printlnImportant("ATTENTION CREATION DUNE SAUV", "rouge");
+            System.out.println("Création d'une nouvelle sauvegarde.");
             parties.add(this);
         }
 
