@@ -1,7 +1,19 @@
-public class Lendemain extends Carte{
+/**
+ * Classe Lendemain qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
+public class Lendemain extends Carte {
+
+    /**
+     * Nombre de cartes lendemain dans le jeu
+     */
     public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe Lendemain
+     */
     public Lendemain() {
         this.couleur = EnumCouleur.vert;
         this.points = 1;
@@ -9,6 +21,10 @@ public class Lendemain extends Carte{
         this.description = "Puisez une carte à la Source. Vous pouvez ensuite jouer une autre carte.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

@@ -26,6 +26,7 @@ public class Carte implements Serializable {
      *
      * @return Une chaîne de caractères représentant la carte.
      */
+    @Override
     public String toString() {
         return "Nom: " + this.nom + "\nDescription: " + this.description + "\nPoints: " + this.points + "\nCouleur: " + this.couleur;
     }

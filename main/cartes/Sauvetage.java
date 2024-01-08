@@ -1,7 +1,19 @@
-public class Sauvetage extends Carte{
+/**
+ * Classe Sauvetage qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
+public class Sauvetage extends Carte {
+
+    /**
+     * Nombre de cartes sauvetage dans le jeu
+     */
     public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe Sauvetage
+     */
     public Sauvetage() {
         this.couleur = EnumCouleur.vert;
         this.points = 2;
@@ -9,6 +21,10 @@ public class Sauvetage extends Carte{
         this.description = "Ajoutez à votre Main une des 3 dernières cartes de la Fosse.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
@@ -31,10 +47,9 @@ public class Sauvetage extends Carte{
                 Utils.println("Erreur : la fosse est vide", "rouge");
             }
         }
-        if(cartesFosse.getNbCartes() == 0){
+        if (cartesFosse.getNbCartes() == 0) {
             Utils.println("La fosse est vide", "rouge");
-        }
-        else{
+        } else {
             // on affiche les 3 dernières cartes de la fosse
             Utils.println("Voici les 3 dernières cartes de la fosse :", "vert");
             Pile.cartesToString(cartesFosse, true, true);

@@ -1,7 +1,19 @@
+/**
+ * Classe Deni qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
+
 public class Deni extends Carte {
 
+    /**
+     * Nombre de cartes deni dans le jeu
+     */
     public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe Deni
+     */
     public Deni() {
         this.couleur = EnumCouleur.bleu;
         this.points = 2;
@@ -9,6 +21,10 @@ public class Deni extends Carte {
         this.description = "Défaussez une carte de votre Main. Copiez le pouvoir de cette carte.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

@@ -1,7 +1,19 @@
+/**
+ * Classe CoupDOeil qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
+
 public class CoupDOeil extends Carte {
 
+    /**
+     * Nombre de cartes coup d'oeil dans le jeu
+     */
     public static final int NB_CARTES = 3;
-    
+
+    /**
+     * Constructeur de la classe CoupDOeil
+     */
     public CoupDOeil() {
         this.couleur = EnumCouleur.bleu;
         this.points = 1;
@@ -9,6 +21,10 @@ public class CoupDOeil extends Carte {
         this.description = "Regardez la Main d’un rival. Vous pouvez ensuite jouer une autre carte.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

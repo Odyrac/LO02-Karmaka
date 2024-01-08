@@ -1,7 +1,19 @@
-public class Semis extends Carte{
+/**
+ * Classe Semis qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
+public class Semis extends Carte {
+
+    /**
+     * Nombre de cartes semis dans le jeu
+     */
     public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe Semis
+     */
     public Semis() {
         this.couleur = EnumCouleur.vert;
         this.points = 2;
@@ -9,6 +21,10 @@ public class Semis extends Carte{
         this.description = "Puisez 2 cartes à la Source, puis placez sur votre Vie Future 2 cartes de votre Main.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
@@ -29,7 +45,7 @@ public class Semis extends Carte{
         Utils.println("Vous avez pioché 2 cartes à la source", "vert");
 
         // placer 2 cartes de la main sur la vie future
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             // on affiche la main du joueur
             Utils.println("Voici votre main :", "vert");
             Pile.cartesToString(main, true, true);

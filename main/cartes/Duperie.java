@@ -1,7 +1,19 @@
-public class Duperie extends Carte{
+/**
+ * Classe Duperie qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
+public class Duperie extends Carte {
+
+    /**
+     * Nombre de cartes duperie dans le jeu
+     */
     public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe Duperie
+     */
     public Duperie() {
         this.couleur = EnumCouleur.bleu;
         this.points = 2;
@@ -9,6 +21,10 @@ public class Duperie extends Carte{
         this.description = "Regardez 3 cartes de la Main d'un rival; ajoutez-en une à votre Main.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

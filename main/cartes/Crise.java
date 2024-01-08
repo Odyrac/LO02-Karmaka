@@ -1,7 +1,19 @@
-public class Crise extends Carte{
+/**
+ * Classe Crise qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
+public class Crise extends Carte {
+
+    /**
+     * Nombre de cartes crise dans le jeu
+     */
     public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe Crise
+     */
     public Crise() {
         this.couleur = EnumCouleur.rouge;
         this.points = 2;
@@ -9,6 +21,10 @@ public class Crise extends Carte{
         this.description = "Le rival de votre choix défausse une de ses Oeuvres.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
         //on récupère la main du joueur actuel

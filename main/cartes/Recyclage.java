@@ -1,7 +1,19 @@
-public class Recyclage extends Carte{
+/**
+ * Classe Recyclage qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
+public class Recyclage extends Carte {
+
+    /**
+     * Nombre de cartes recyclage dans le jeu
+     */
     public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe Recyclage
+     */
     public Recyclage() {
         this.couleur = EnumCouleur.vert;
         this.points = 1;
@@ -9,6 +21,10 @@ public class Recyclage extends Carte{
         this.description = "Ajoutez à votre Vie Future une des 3 dernières cartes de la Fosse.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

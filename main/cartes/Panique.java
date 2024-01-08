@@ -1,14 +1,30 @@
-public class Panique extends Carte{
+/**
+ * Classe Panique qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
-        public static final int NB_CARTES = 3;
+public class Panique extends Carte {
 
-        public Panique() {
-            this.couleur = EnumCouleur.rouge;
-            this.points = 1;
-            this.nom = "Panique";
-            this.description = "Défaussez la première carte de la Pile d'un joueur. Vous pouvez ensuite jouer une autre carte ";
-        }
+    /**
+     * Nombre de cartes panique dans le jeu
+     */
+    public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe Panique
+     */
+    public Panique() {
+        this.couleur = EnumCouleur.rouge;
+        this.points = 1;
+        this.nom = "Panique";
+        this.description = "Défaussez la première carte de la Pile d'un joueur. Vous pouvez ensuite jouer une autre carte ";
+    }
+
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

@@ -1,7 +1,19 @@
+/**
+ * Classe Transmigration qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
+
 public class Transmigration extends Carte {
 
+    /**
+     * Nombre de cartes transmigration dans le jeu
+     */
     public static final int NB_CARTES = 3;
-    
+
+    /**
+     * Constructeur de la classe Transmigration
+     */
     public Transmigration() {
         this.couleur = EnumCouleur.bleu;
         this.points = 1;
@@ -9,7 +21,11 @@ public class Transmigration extends Carte {
         this.description = "Placez dans votre Main n’importe quelle carte de votre Vie Future.";
     }
 
-    public void utiliserPouvoir(){
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
+    public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
         // on récupère sa main pour ajouter la carte transmigration aux cartes jouees pour pouvoir

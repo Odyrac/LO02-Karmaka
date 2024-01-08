@@ -1,7 +1,19 @@
+/**
+ * Classe RevesBrises qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
+
 public class RevesBrises extends Carte {
 
+    /**
+     * Nombre de cartes reves brises dans le jeu
+     */
     public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe RevesBrises
+     */
     public RevesBrises() {
         this.couleur = EnumCouleur.bleu;
         this.points = 1;
@@ -9,6 +21,10 @@ public class RevesBrises extends Carte {
         this.description = "Placez la première carte de la Vie Future d'un rival sur la vôtre.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
@@ -20,7 +36,7 @@ public class RevesBrises extends Carte {
         // on récupère le joueur cible (on a toujours 2 joueurs donc c'est forcément l'autre)
         Joueur joueurAdverse = Partie.getInstance().getJoueurAdverse(joueurActuel);
         // on récupère la carte de la vie future
-        try{
+        try {
             Carte carte = joueurAdverse.getVieFuture().getCarte(0);
             // on l'ajoute à sa vie future
             Pile vieFuture = joueurActuel.getVieFuture();

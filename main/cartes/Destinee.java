@@ -1,7 +1,19 @@
+/**
+ * Classe Destinee qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
+
 public class Destinee extends Carte {
 
+    /**
+     * Nombre de cartes destinée dans le jeu
+     */
     public static final int NB_CARTES = 2;
 
+    /**
+     * Constructeur de la classe Destinee
+     */
     public Destinee() {
         this.couleur = EnumCouleur.bleu;
         this.points = 2;
@@ -9,6 +21,10 @@ public class Destinee extends Carte {
         this.description = "Regardez les 3 premières cartes de la Source ; ajoutez-en jusqu’à 2 à votre Vie Future. Replacez le reste dans l'ordre souhaité.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
         //on récupère sa main

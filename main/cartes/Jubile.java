@@ -1,7 +1,19 @@
-public class Jubile extends Carte{
+/**
+ * Classe Jubile qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
+public class Jubile extends Carte {
+
+    /**
+     * Nombre de cartes jubile dans le jeu
+     */
     public static final int NB_CARTES = 2;
 
+    /**
+     * Constructeur de la classe Jubile
+     */
     public Jubile() {
         this.couleur = EnumCouleur.vert;
         this.points = 3;
@@ -9,6 +21,10 @@ public class Jubile extends Carte{
         this.description = "Placez jusqu'à 2 cartes de votre Main sur vos Oeuvres.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

@@ -1,14 +1,30 @@
-public class DernierSouffle extends Carte{
+/**
+ * Classe DernierSouffle qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
-        public static final int NB_CARTES = 3;
+public class DernierSouffle extends Carte {
 
-        public DernierSouffle() {
-            this.couleur = EnumCouleur.rouge;
-            this.points = 1;
-            this.nom = "Dernier Souffle";
-            this.description = "Le joueur de votre choix défausse une carte de sa Main.";
-        }
+    /**
+     * Nombre de cartes dernier souffle dans le jeu
+     */
+    public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe DernierSouffle
+     */
+    public DernierSouffle() {
+        this.couleur = EnumCouleur.rouge;
+        this.points = 1;
+        this.nom = "Dernier Souffle";
+        this.description = "Le joueur de votre choix défausse une carte de sa Main.";
+    }
+
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
         //on récupère la main du joueur actuel

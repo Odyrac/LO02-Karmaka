@@ -1,7 +1,19 @@
+/**
+ * Classe Vol qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
+
 public class Vol extends Carte {
 
+    /**
+     * Nombre de cartes vol dans le jeu
+     */
     public static final int NB_CARTES = 2;
 
+    /**
+     * Constructeur de la classe Vol
+     */
     public Vol() {
         this.couleur = EnumCouleur.bleu;
         this.points = 3;
@@ -9,7 +21,11 @@ public class Vol extends Carte {
         this.description = "Placez dans votre Main l'Oeuvre Exposée d'un rival.";
     }
 
-    public void utiliserPouvoir(){
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
+    public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
         // on récupère sa main pour ajouter la carte vol aux cartes jouees pour pouvoir

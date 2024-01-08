@@ -1,7 +1,19 @@
-public class Mimetisme extends Carte{
+/**
+ * Classe Mimetisme qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
+public class Mimetisme extends Carte {
+
+    /**
+     * Nombre de cartes mimetisme dans le jeu
+     */
     public static final int NB_CARTES = 2;
 
+    /**
+     * Constructeur de la classe Mimetisme
+     */
     public Mimetisme() {
         this.couleur = EnumCouleur.mosaique;
         this.points = 1;
@@ -9,6 +21,10 @@ public class Mimetisme extends Carte{
         this.description = "Choisissez un Rival. Copiez le pouvoir de son Oeuvre Exposée.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

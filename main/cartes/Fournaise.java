@@ -1,14 +1,30 @@
-public class Fournaise extends Carte{
+/**
+ * Classe Fournaise qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
-        public static final int NB_CARTES = 3;
+public class Fournaise extends Carte {
 
-        public Fournaise() {
-            this.couleur = EnumCouleur.rouge;
-            this.points = 2;
-            this.nom = "Fournaise";
-            this.description = "Défaussez les 2 premières cartes de la Vie Future d'un rival.";
-        }
+    /**
+     * Nombre de cartes fournaise dans le jeu
+     */
+    public static final int NB_CARTES = 3;
 
+    /**
+     * Constructeur de la classe Fournaise
+     */
+    public Fournaise() {
+        this.couleur = EnumCouleur.rouge;
+        this.points = 2;
+        this.nom = "Fournaise";
+        this.description = "Défaussez les 2 premières cartes de la Vie Future d'un rival.";
+    }
+
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

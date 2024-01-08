@@ -1,7 +1,19 @@
-public class Longevite extends Carte{
+/**
+ * Classe Longevite qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
-public static final int NB_CARTES = 3;
+public class Longevite extends Carte {
 
+    /**
+     * Nombre de cartes longevite dans le jeu
+     */
+    public static final int NB_CARTES = 3;
+
+    /**
+     * Constructeur de la classe Longevite
+     */
     public Longevite() {
         this.couleur = EnumCouleur.vert;
         this.points = 2;
@@ -9,6 +21,10 @@ public static final int NB_CARTES = 3;
         this.description = "Placez 2 cartes puisées à la Source sur la Pile d'un joueur.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

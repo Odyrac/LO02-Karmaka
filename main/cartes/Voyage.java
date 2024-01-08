@@ -1,14 +1,30 @@
-public class Voyage extends Carte{
+/**
+ * Classe Voyage qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
-        public static final int NB_CARTES = 2;
+public class Voyage extends Carte {
 
-        public Voyage() {
-            this.couleur = EnumCouleur.vert;
-            this.points = 3;
-            this.nom = "Voyage";
-            this.description = "Puisez 3 cartes à la Source. Vous pouvez ensuite jouer une autre carte.";
-        }
+    /**
+     * Nombre de cartes voyage dans le jeu
+     */
+    public static final int NB_CARTES = 2;
 
+    /**
+     * Constructeur de la classe Voyage
+     */
+    public Voyage() {
+        this.couleur = EnumCouleur.vert;
+        this.points = 3;
+        this.nom = "Voyage";
+        this.description = "Puisez 3 cartes à la Source. Vous pouvez ensuite jouer une autre carte.";
+    }
+
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();

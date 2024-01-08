@@ -1,7 +1,19 @@
-public class Incarnation extends Carte{
+/**
+ * Classe Incarnation qui hérite de la classe Carte
+ *
+ * @see Carte
+ */
 
+public class Incarnation extends Carte {
+
+    /**
+     * Nombre de cartes incarnation dans le jeu
+     */
     public static final int NB_CARTES = 5;
 
+    /**
+     * Constructeur de la classe Incarnation
+     */
     public Incarnation() {
         this.couleur = EnumCouleur.mosaique;
         this.points = 1;
@@ -9,6 +21,10 @@ public class Incarnation extends Carte{
         this.description = "Choisissez une de vos Oeuvres. Copiez son pouvoir.";
     }
 
+    /**
+     * Utilisation du pouvoir de la carte
+     */
+    @Override
     public void utiliserPouvoir() {
         // on récupère le joueur actuel
         Joueur joueurActuel = Partie.getInstance().getJoueurActuel();
